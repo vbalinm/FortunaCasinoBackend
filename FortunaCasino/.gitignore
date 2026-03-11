@@ -1,5 +1,0 @@
-appsettings.Development.json
-appsettings.Production.json
-# Ha van Environment változós verzió, azt se:
-appsettings.*.json
-!appsettings.json  # Ez maradhat, ez az alap

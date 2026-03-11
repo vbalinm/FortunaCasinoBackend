@@ -1,6 +1,0 @@
-@FortunaCasino_HostAddress = http://localhost:5168
-
-GET {{FortunaCasino_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
