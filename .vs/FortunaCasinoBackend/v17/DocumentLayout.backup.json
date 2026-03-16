@@ -1,10 +1,6 @@
 {
   "Version": 1,
-<<<<<<< HEAD
-  "WorkspaceRootPath": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaBackendCont\\",
-=======
   "WorkspaceRootPath": "C:\\Users\\B\u00E1lint\\source\\repos\\FortunaCasinoBackend\\",
->>>>>>> bbf29dc995d77456f5869674ef354cd7c37dd7e2
   "Documents": [],
   "DocumentGroupContainers": [
     {
@@ -18,17 +14,14 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{28836128-fc2c-11d2-a433-00c04f72d18a}"
-<<<<<<< HEAD
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-=======
->>>>>>> bbf29dc995d77456f5869674ef354cd7c37dd7e2
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }
