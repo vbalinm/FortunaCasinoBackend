@@ -13,7 +13,8 @@ public class User
     public DateTime? LastLoginAt { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
+    public bool EmailConfirmed { get; set; } = false;
+    public string? EmailConfirmationToken { get; set; }
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
     public List<string> Roles => UserRoles?.Select(ur => ur.Role?.RoleName).Where(r => r != null).ToList() ?? new List<string>();

@@ -3028,23 +3028,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\201-07\\.nuget\\packages\\": {},
+    "C:\\Users\\Bálint\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\201-07\\Desktop\\FortunaCasino  javitott\\FortunaCasino\\FortunaCasino\\FortunaCasino\\FortunaCasino.csproj",
+      "projectUniqueName": "C:\\Users\\Bálint\\Desktop\\FortunaBackendCont\\FortunaCasino.csproj",
       "projectName": "FortunaCasino",
-      "projectPath": "C:\\Users\\201-07\\Desktop\\FortunaCasino  javitott\\FortunaCasino\\FortunaCasino\\FortunaCasino\\FortunaCasino.csproj",
-      "packagesPath": "C:\\Users\\201-07\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\201-07\\Desktop\\FortunaCasino  javitott\\FortunaCasino\\FortunaCasino\\FortunaCasino\\obj\\",
+      "projectPath": "C:\\Users\\Bálint\\Desktop\\FortunaBackendCont\\FortunaCasino.csproj",
+      "packagesPath": "C:\\Users\\Bálint\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Bálint\\Desktop\\FortunaBackendCont\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\201-07\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Bálint\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3071,7 +3071,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -3127,7 +3127,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.309/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

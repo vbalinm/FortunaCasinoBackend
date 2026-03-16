@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using FortunaCasino.DTOs.Auth;
+﻿using FortunaCasino.DTOs.Auth;
 using FortunaCasino.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FortunaCasino.Controllers;
 
@@ -20,19 +21,66 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
         var result = await _authService.RegisterAsync(request);
-        return result == null ? BadRequest("Foglalt felhasználónév") : Ok(result);
+        return result == null
+            ? BadRequest("Foglalt felhasználónév")
+            : Ok(new { Message = "Regisztráció sikeres! Kérlek erősítsd meg az email címedet.", User = result.User });
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var result = await _authService.LoginAsync(request);
-        return result == null ? Unauthorized("Hibás adatok") : Ok(result);
+        if (result == null)
+            return Unauthorized("Hibás adatok vagy nem erősítetted meg az email címedet");
+
+        return Ok(result);
+    }
+
+    // Megerősítés (marad a meglévő)
+    [HttpGet("confirm-email")]
+    public async Task<IActionResult> ConfirmEmail(long userId, string token)
+    {
+        var result = await _authService.ConfirmEmailAsync(userId, token);
+        return result
+            ? Ok("Email sikeresen megerősítve!")
+            : BadRequest("Érvénytelen token");
+    }
+
+    // Újraküldés gombhoz (bejelentkezett usernek)
+    [Authorize]
+    [HttpPost("resend-confirmation")]
+    public async Task<IActionResult> ResendConfirmation()
+    {
+        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var user = await _authService.GetUserById(userId); // Ezt add hozzá az IAuthService-hez!
+
+        if (user == null || user.EmailConfirmed)
+            return BadRequest("Már megerősített email vagy nem található");
+
+        var result = await _authService.ResendConfirmationAsync(user.Email);
+        return result
+            ? Ok("Megerősítő email elküldve!")
+            : BadRequest("Hiba történt");
+    }
+
+    // Státusz lekérdezés (profil oldalhoz)
+    [Authorize]
+    [HttpGet("email-status")]
+    public async Task<IActionResult> GetEmailStatus()
+    {
+        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var user = await _authService.GetUserById(userId);
+
+        return Ok(new
+        {
+            Email = user.Email,
+            IsConfirmed = user.EmailConfirmed
+        });
     }
 
     [Authorize]
     [HttpGet]
-    public async Task<ActionResult> GEtAll()
+    public async Task<ActionResult> GetAll()
     {
         return Ok(await _authService.GetAll());
     }
