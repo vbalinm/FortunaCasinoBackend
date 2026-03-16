@@ -1,114 +1,87 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\",
+  "WorkspaceRootPath": "C:\\Users\\B\u00E1lint\\source\\repos\\FortunaCasinoBackend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\controllers\\lotterycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\controllers\\lotterycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\IAuthService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\services\\lotteryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\services\\lotteryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\ILotteryService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\AuthService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\fortunacasino.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\fortunacasino.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\LotteryService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\LotteryController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\AuthController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\services\\interfaces\\ilotteryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\services\\interfaces\\ilotteryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\UserRole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\services\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\services\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\models\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\models\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\models\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\models\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\FortunaCasino.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\models\\lotteryticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\models\\lotteryticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryTicket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\models\\lotterydraw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\models\\lotterydraw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryDraw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\AppDbContextModelSnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\migrations\\20260218173609_intitaldb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\migrations\\20260218173609_intitaldb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\UserDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\TicketResponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\dtos\\lottery\\ticketresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\dtos\\lottery\\ticketresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\BuyTicketRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\dtos\\lottery\\buyticketrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\dtos\\lottery\\buyticketrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\RegisterRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\dtos\\auth\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\dtos\\auth\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\LoginRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\AuthResponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\dtos\\auth\\authresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\dtos\\auth\\authresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Data\\AppDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\20260218173609_IntitalDb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Properties\\launchSettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|c:\\users\\b\u00E1lint\\desktop\\fortunacasino\\fortunacasino\\fortunacasino\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{6B78ACF8-BCEA-45C1-896C-0CF2BC3E121A}|FortunaCasino\\FortunaCasino.csproj|solutionrelative:fortunacasino\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.Development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -129,176 +102,164 @@
               "DocumentIndex": 0,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\.gitignore",
-              "RelativeDocumentMoniker": "FortunaCasino\\.gitignore",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\.gitignore",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\.gitignore",
-              "RelativeToolTip": "FortunaCasino\\.gitignore",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAsAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\.gitignore",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF8SURBVDhPjVNLTgJBEG1lwpoFB3GNK9fieA48hD8iwT/ihwgSDAIHgAGXXsEV18CNzL/LquqZdsYM6kteXqcy3fWqpmpNRBgOhyABBEgpAFVKPIMUcYzUyOU\u002BXM/b2qtU3vkSfRjjZTCAMAw1A2LwzdFoBPP5HNqdzuL27n4juibWI\u002BUshBA1DIkhEx9iEorFotgslQqGYbxxAGFEqt1MxmPWJLbLZdZ\u002Bv89q5PMFPiTR6z2zdaxR0fXA0XTBcVywkb4fwHXjRteecIDNQ7UmExVYAdPcxYaqclN46na5WenMKjtlVnTYwcXlVYaDqImW9beD5N/TeGy32QHXm6hZ03ZgiSQHp2fnWQ4oBmJqWSqwAqZpZjt4aLXAD4J0VqyZsmoubfB8H2r1eoaD6NXZ9HcHO\u002BSA3f4AjifXl8rItOETM8ckB9WTWpYD9RdeZ1PWVWAHWXPQaDb59f/w8LiqHeh1pvGkCaP6qB8yXusoxmuNZ7XmII4O9vGuEF86osuDYRkpYQAAAABJRU5ErkJggg==",
-              "WhenOpened": "2026-03-11T12:51:47.441Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+              "WhenOpened": "2026-03-11T12:51:47.441Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Program.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Program.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Program.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Program.cs",
-              "RelativeToolTip": "FortunaCasino\\Program.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAFIAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-17T21:21:22.084Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-17T21:21:22.084Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\User.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Models\\User.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\User.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\User.cs",
-              "RelativeToolTip": "FortunaCasino\\Models\\User.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:19:58.769Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 3,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\IAuthService.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Services\\Interfaces\\IAuthService.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\IAuthService.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\IAuthService.cs",
-              "RelativeToolTip": "FortunaCasino\\Services\\Interfaces\\IAuthService.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\IAuthService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:31:52.749Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 4,
               "Title": "ILotteryService.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\ILotteryService.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Services\\Interfaces\\ILotteryService.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\ILotteryService.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\ILotteryService.cs",
-              "RelativeToolTip": "FortunaCasino\\Services\\Interfaces\\ILotteryService.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\Interfaces\\ILotteryService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:30:57.124Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\AuthService.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\AuthService.cs",
-              "RelativeToolTip": "FortunaCasino\\Services\\AuthService.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\AuthService.cs",
               "ViewState": "AgIAAEIAAAAAAAAAAAAswGoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:32:16.05Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "LotteryService.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\LotteryService.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Services\\LotteryService.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\LotteryService.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\LotteryService.cs",
-              "RelativeToolTip": "FortunaCasino\\Services\\LotteryService.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Services\\LotteryService.cs",
               "ViewState": "AgIAALEAAAAAAAAAAAAiwNsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:31:26.327Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "LotteryController.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\LotteryController.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Controllers\\LotteryController.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\LotteryController.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\LotteryController.cs",
-              "RelativeToolTip": "FortunaCasino\\Controllers\\LotteryController.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\LotteryController.cs",
               "ViewState": "AgIAAHcAAAAAAAAAAAAqwI0AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-17T22:33:34.931Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-17T22:33:34.931Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "FortunaCasino\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Controllers\\AuthController.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAACIAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:33:05.569Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 9,
               "Title": "UserRole.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\UserRole.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Models\\UserRole.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\UserRole.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\UserRole.cs",
-              "RelativeToolTip": "FortunaCasino\\Models\\UserRole.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\UserRole.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:21:07.885Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 10,
               "Title": "Transaction.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Transaction.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Models\\Transaction.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Transaction.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Transaction.cs",
-              "RelativeToolTip": "FortunaCasino\\Models\\Transaction.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Transaction.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:22:20.995Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 11,
               "Title": "Role.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Role.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Models\\Role.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Role.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Role.cs",
-              "RelativeToolTip": "FortunaCasino\\Models\\Role.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\Role.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:20:43.866Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.json",
-              "RelativeDocumentMoniker": "FortunaCasino\\appsettings.json",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.json",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.json",
-              "RelativeToolTip": "FortunaCasino\\appsettings.json",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-02-17T22:34:00.628Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 13,
               "Title": "FortunaCasino.http",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\FortunaCasino.http",
-              "RelativeDocumentMoniker": "FortunaCasino\\FortunaCasino.http",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\FortunaCasino.http",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\FortunaCasino.http",
-              "RelativeToolTip": "FortunaCasino\\FortunaCasino.http",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\FortunaCasino.http",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
               "WhenOpened": "2026-02-18T17:21:59.141Z"
@@ -308,9 +269,9 @@
               "DocumentIndex": 14,
               "Title": "LotteryTicket.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryTicket.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Models\\LotteryTicket.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryTicket.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryTicket.cs",
-              "RelativeToolTip": "FortunaCasino\\Models\\LotteryTicket.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryTicket.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAA3wCEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:21:55.561Z"
@@ -320,9 +281,9 @@
               "DocumentIndex": 15,
               "Title": "LotteryDraw.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryDraw.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Models\\LotteryDraw.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryDraw.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryDraw.cs",
-              "RelativeToolTip": "FortunaCasino\\Models\\LotteryDraw.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Models\\LotteryDraw.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:21:31.555Z"
@@ -332,105 +293,105 @@
               "DocumentIndex": 16,
               "Title": "AppDbContextModelSnapshot.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\AppDbContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\AppDbContextModelSnapshot.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\AppDbContextModelSnapshot.cs",
-              "RelativeToolTip": "FortunaCasino\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\AppDbContextModelSnapshot.cs",
               "ViewState": "AgIAADMBAAAAAAAAAAAiwF0BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-11T05:48:30.845Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "UserDto.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\UserDto.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\DTOs\\UserDto.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\UserDto.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\UserDto.cs",
-              "RelativeToolTip": "FortunaCasino\\DTOs\\UserDto.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\UserDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:24:22.129Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "TicketResponse.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\TicketResponse.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\DTOs\\Lottery\\TicketResponse.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\TicketResponse.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\TicketResponse.cs",
-              "RelativeToolTip": "FortunaCasino\\DTOs\\Lottery\\TicketResponse.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\TicketResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:25:21.111Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 19,
               "Title": "BuyTicketRequest.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\BuyTicketRequest.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\DTOs\\Lottery\\BuyTicketRequest.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\BuyTicketRequest.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\BuyTicketRequest.cs",
-              "RelativeToolTip": "FortunaCasino\\DTOs\\Lottery\\BuyTicketRequest.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Lottery\\BuyTicketRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:24:44.908Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 20,
               "Title": "RegisterRequest.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\RegisterRequest.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\DTOs\\Auth\\RegisterRequest.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\RegisterRequest.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\RegisterRequest.cs",
-              "RelativeToolTip": "FortunaCasino\\DTOs\\Auth\\RegisterRequest.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\RegisterRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:22:46.61Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 21,
               "Title": "LoginRequest.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\LoginRequest.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\DTOs\\Auth\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\LoginRequest.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\LoginRequest.cs",
-              "RelativeToolTip": "FortunaCasino\\DTOs\\Auth\\LoginRequest.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\LoginRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:23:06.638Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 22,
               "Title": "AuthResponse.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\AuthResponse.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\DTOs\\Auth\\AuthResponse.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\AuthResponse.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\AuthResponse.cs",
-              "RelativeToolTip": "FortunaCasino\\DTOs\\Auth\\AuthResponse.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\DTOs\\Auth\\AuthResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:24:01.335Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 23,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Data\\AppDbContext.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "FortunaCasino\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Data\\AppDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-17T22:25:51.149Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 24,
               "Title": "20260218173609_IntitalDb.cs",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\20260218173609_IntitalDb.cs",
-              "RelativeDocumentMoniker": "FortunaCasino\\Migrations\\20260218173609_IntitalDb.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\20260218173609_IntitalDb.cs",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\20260218173609_IntitalDb.cs",
-              "RelativeToolTip": "FortunaCasino\\Migrations\\20260218173609_IntitalDb.cs",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Migrations\\20260218173609_IntitalDb.cs",
               "ViewState": "AgIAANMAAAAAAAAAAAAUwPwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-18T17:36:09.552Z"
@@ -440,9 +401,9 @@
               "DocumentIndex": 25,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "FortunaCasino\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Properties\\launchSettings.json",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Properties\\launchSettings.json",
-              "RelativeToolTip": "FortunaCasino\\Properties\\launchSettings.json",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-03-11T05:45:50.619Z"
@@ -452,12 +413,20 @@
               "DocumentIndex": 26,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "FortunaCasino\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.Development.json",
               "ToolTip": "C:\\Users\\B\u00E1lint\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.Development.json",
-              "RelativeToolTip": "FortunaCasino\\appsettings.Development.json",
+              "RelativeToolTip": "..\\..\\..\\Desktop\\FortunaCasino\\FortunaCasino\\FortunaCasino\\appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-02-17T22:36:25.48Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }
