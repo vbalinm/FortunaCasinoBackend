@@ -8,7 +8,7 @@ public class LotteryTicket
     public long DrawId { get; set; }
     public LotteryDraw Draw { get; set; } = null!;
     public string TicketCode { get; set; } = string.Empty; // LOT format
-
+    public string? FieldsNumbers { get; set; }
     public string? FieldA { get; set; }
     public string? FieldB { get; set; }
     public string? FieldC { get; set; }

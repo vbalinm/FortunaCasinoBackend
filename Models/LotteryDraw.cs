@@ -12,6 +12,7 @@ public class LotteryDraw
     public decimal TotalPayout { get; set; }
     public DateTime? DrawnAt { get; set; }
     public long? DrawnBy { get; set; }
+    public string GameType { get; set; } = "Lottery5";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<LotteryTicket> Tickets { get; set; } = new List<LotteryTicket>();
