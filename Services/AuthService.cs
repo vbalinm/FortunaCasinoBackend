@@ -67,7 +67,6 @@ public class AuthService : IAuthService
         }
         catch
         {
-            // Ha nem megy az email, akkor is sikeres a regisztráció
         }
 
         return new AuthResponse

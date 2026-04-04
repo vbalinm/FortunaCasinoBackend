@@ -1,16 +1,17 @@
-﻿using System.Security.Claims;
+﻿using FortunaCasino.Data;
+using FortunaCasino.DTOs.Lottery;           // ← Ez most már működni fog
+using FortunaCasino.Models;
+using FortunaCasino.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FortunaCasino.Data;
-using FortunaCasino.DTOs.Lottery;
-using FortunaCasino.Models;
-using FortunaCasino.Services.Interfaces;
+using System.Security.Claims;
+using System.Text.Json;
 
 namespace FortunaCasino.Controllers;
 
 [ApiController]
-[Route("api/lottery")]
+[Route("api")]
 public class LotteryController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -22,122 +23,19 @@ public class LotteryController : ControllerBase
         _lotteryService = lotteryService;
     }
 
-    [HttpGet("draws")]
+    [HttpGet("lottery/draws")]
     public async Task<IActionResult> GetDraws()
     {
         var draws = await _context.LotteryDraws
             .Where(d => d.IsActive && d.DrawDate > DateTime.UtcNow)
-            .Select(d => new { d.Id, d.DrawDate, d.TicketPrice, d.IsDrawn })
+            .Select(d => new { d.Id, d.DrawDate, d.TicketPrice, d.IsDrawn, d.GameType })
             .ToListAsync();
 
         return Ok(draws);
     }
 
     [Authorize]
-    [HttpPost("ticket")]
-    public async Task<IActionResult> BuyTicket([FromBody] BuyTicketRequest request)
-    {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
-        using var transaction = await _context.Database.BeginTransactionAsync();
-
-        try
-        {
-            var user = await _context.Users.FirstAsync(u => u.Id == userId);
-            var draw = await _context.LotteryDraws.FindAsync(request.DrawId);
-
-            if (draw == null || !draw.IsActive)
-                return BadRequest("Érvénytelen sorsolás");
-            if (draw.DrawDate < DateTime.UtcNow.AddHours(1))
-                return BadRequest("Lejárt a vásárlási idő");
-
-            var fields = new List<string?>();
-
-            if (request.IsQuickPick)
-            {
-                fields.Add(_lotteryService.GenerateRandomNumbers());
-                if (!string.IsNullOrEmpty(request.FieldB)) fields.Add(_lotteryService.GenerateRandomNumbers());
-                if (!string.IsNullOrEmpty(request.FieldC)) fields.Add(_lotteryService.GenerateRandomNumbers());
-                if (!string.IsNullOrEmpty(request.FieldD)) fields.Add(_lotteryService.GenerateRandomNumbers());
-                if (!string.IsNullOrEmpty(request.FieldE)) fields.Add(_lotteryService.GenerateRandomNumbers());
-                if (!string.IsNullOrEmpty(request.FieldF)) fields.Add(_lotteryService.GenerateRandomNumbers());
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(request.FieldA)) fields.Add(request.FieldA);
-                if (!string.IsNullOrEmpty(request.FieldB)) fields.Add(request.FieldB);
-                if (!string.IsNullOrEmpty(request.FieldC)) fields.Add(request.FieldC);
-                if (!string.IsNullOrEmpty(request.FieldD)) fields.Add(request.FieldD);
-                if (!string.IsNullOrEmpty(request.FieldE)) fields.Add(request.FieldE);
-                if (!string.IsNullOrEmpty(request.FieldF)) fields.Add(request.FieldF);
-            }
-
-            if (fields.Count == 0)
-                return BadRequest("Legalább egy mező kötelező");
-
-            foreach (var field in fields)
-            {
-                if (!_lotteryService.ValidateNumbers(field!))
-                    return BadRequest("Érvénytelen számformátum");
-            }
-
-            var totalPrice = draw.TicketPrice * fields.Count;
-
-            if (user.Balance < totalPrice)
-                return BadRequest("Nincs elég egyenleg");
-
-            user.Balance -= totalPrice;
-
-            var ticket = new LotteryTicket
-            {
-                UserId = userId,
-                DrawId = request.DrawId,
-                TicketCode = await _lotteryService.GenerateTicketCode(_context),
-                FieldA = fields.Count > 0 ? fields[0] : null,
-                FieldB = fields.Count > 1 ? fields[1] : null,
-                FieldC = fields.Count > 2 ? fields[2] : null,
-                FieldD = fields.Count > 3 ? fields[3] : null,
-                FieldE = fields.Count > 4 ? fields[4] : null,
-                FieldF = fields.Count > 5 ? fields[5] : null,
-                FieldsFilled = (byte)fields.Count,
-                IsQuickPick = request.IsQuickPick,
-                TotalPrice = totalPrice
-            };
-
-            _context.LotteryTickets.Add(ticket);
-
-            _context.Transactions.Add(new Transaction
-            {
-                UserId = userId,
-                Type = "ticket_purchase",
-                Amount = -totalPrice,
-                BalanceBefore = user.Balance + totalPrice,
-                BalanceAfter = user.Balance,
-                Description = $"Szelvény: {ticket.TicketCode}"
-            });
-
-            await _context.SaveChangesAsync();
-            await transaction.CommitAsync();
-
-            return Ok(new
-            {
-                ticket.TicketCode,
-                ticket.FieldA,
-                ticket.FieldB,
-                Fields = fields.Count,
-                Price = totalPrice,
-                Balance = user.Balance
-            });
-        }
-        catch (Exception ex)
-        {
-            await transaction.RollbackAsync();
-            return StatusCode(500, $"Hiba: {ex.Message}");
-        }
-    }
-
-    [Authorize]
-    [HttpGet("my-tickets")]
+    [HttpGet("tickets/my")]
     public async Task<IActionResult> GetMyTickets()
     {
         var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -146,127 +44,157 @@ public class LotteryController : ControllerBase
             .Where(t => t.UserId == userId)
             .Include(t => t.Draw)
             .OrderByDescending(t => t.BoughtAt)
-            .Select(t => new TicketResponse
+            .Select(t => new
             {
-                Id = t.Id,
-                TicketCode = t.TicketCode,
-                DrawDate = t.Draw.DrawDate,
-                FieldA = t.FieldA,
-                FieldB = t.FieldB,
-                TotalPrice = t.TotalPrice,
+                t.Id,
+                t.TicketCode,
+                GameType = t.Draw.GameType,
+                t.FieldsNumbers,
+                t.Fields,
+                t.FieldsFilled,
+                t.TotalPrice,
                 WinAmount = t.TotalWinAmount,
-                Status = t.Status
+                t.Status,
+                t.BoughtAt,
+                DrawDate = t.Draw.DrawDate
             })
             .ToListAsync();
 
         return Ok(tickets);
     }
 
-    [Authorize(Roles = "admin")]
-    [HttpPost("draw/{id}")]
-    public async Task<IActionResult> DrawLottery(long id)
+    [Authorize]
+    [HttpPost("tickets/purchase")]
+    public async Task<IActionResult> PurchaseTickets([FromBody] PurchaseRequest request)
     {
-        using var transaction = await _context.Database.BeginTransactionAsync();
+        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
+        using var transaction = await _context.Database.BeginTransactionAsync();
         try
         {
-            var draw = await _context.LotteryDraws.FindAsync(id);
-            if (draw == null || draw.IsDrawn)
-                return BadRequest("Már sorsoltak");
+            var user = await _context.Users.FirstAsync(u => u.Id == userId);
 
-            var winningNumbers = _lotteryService.GenerateRandomNumbers();
-            draw.WinningNumbers = winningNumbers;
-            draw.IsDrawn = true;
-            draw.DrawnAt = DateTime.UtcNow;
+            decimal totalPrice = request.Tickets.Sum(item => item.Price * item.Quantity);
 
-            var tickets = await _context.LotteryTickets
-                .Include(t => t.User)
-                .Where(t => t.DrawId == id && t.Status == "active")
+            if (user.Balance < totalPrice)
+                return BadRequest(new { message = "Nincs elegendő egyenleg" });
+
+            var activeDraws = await _context.LotteryDraws
+                .Where(d => d.IsActive && !d.IsDrawn && d.DrawDate > DateTime.UtcNow)
                 .ToListAsync();
 
-            decimal totalPayout = 0;
-            int winners = 0;
+            var createdTickets = new List<object>();
 
-            foreach (var ticket in tickets)
+            foreach (var item in request.Tickets)
             {
-                decimal winAmount = 0;
+                var gameType = MapGameNameToType(item.GameName);
 
-                if (!string.IsNullOrEmpty(ticket.FieldA))
-                {
-                    var m = _lotteryService.CalculateMatches(ticket.FieldA, winningNumbers);
-                    ticket.MatchesA = (byte)m;
-                    winAmount += _lotteryService.CalculatePrize(m, draw.TicketPrice);
-                }
-                if (!string.IsNullOrEmpty(ticket.FieldB))
-                {
-                    var m = _lotteryService.CalculateMatches(ticket.FieldB, winningNumbers);
-                    ticket.MatchesB = (byte)m;
-                    winAmount += _lotteryService.CalculatePrize(m, draw.TicketPrice);
-                }
-                if (!string.IsNullOrEmpty(ticket.FieldC))
-                {
-                    var m = _lotteryService.CalculateMatches(ticket.FieldC, winningNumbers);
-                    ticket.MatchesC = (byte)m;
-                    winAmount += _lotteryService.CalculatePrize(m, draw.TicketPrice);
-                }
-                if (!string.IsNullOrEmpty(ticket.FieldD))
-                {
-                    var m = _lotteryService.CalculateMatches(ticket.FieldD, winningNumbers);
-                    ticket.MatchesD = (byte)m;
-                    winAmount += _lotteryService.CalculatePrize(m, draw.TicketPrice);
-                }
-                if (!string.IsNullOrEmpty(ticket.FieldE))
-                {
-                    var m = _lotteryService.CalculateMatches(ticket.FieldE, winningNumbers);
-                    ticket.MatchesE = (byte)m;
-                    winAmount += _lotteryService.CalculatePrize(m, draw.TicketPrice);
-                }
-                if (!string.IsNullOrEmpty(ticket.FieldF))
-                {
-                    var m = _lotteryService.CalculateMatches(ticket.FieldF, winningNumbers);
-                    ticket.MatchesF = (byte)m;
-                    winAmount += _lotteryService.CalculatePrize(m, draw.TicketPrice);
-                }
+                var draw = activeDraws.FirstOrDefault(d => d.GameType == gameType)
+                        ?? activeDraws.FirstOrDefault();
 
-                ticket.TotalWinAmount = winAmount;
-                ticket.Status = "drawn";
+                if (draw == null) continue;
 
-                if (winAmount > 0)
+                for (int q = 0; q < item.Quantity; q++)
                 {
-                    ticket.User.Balance += winAmount;
-                    ticket.IsPaidOut = true;
-                    totalPayout += winAmount;
-                    winners++;
+                    string fieldsNumbers = "";
+                    int fieldCount = 1;
 
-                    _context.Transactions.Add(new Transaction
+                    if (item.Type == "joker")
                     {
-                        UserId = ticket.UserId,
-                        Type = "win_payout",
-                        Amount = winAmount,
-                        BalanceBefore = ticket.User.Balance - winAmount,
-                        BalanceAfter = ticket.User.Balance,
-                        TicketId = ticket.Id,
-                        Description = $"Nyeremény: {ticket.TicketCode}"
+                        fieldsNumbers = item.Numbers is JsonElement je
+                            ? je.GetString() ?? ""
+                            : item.Numbers?.ToString() ?? "";
+                    }
+                    else
+                    {
+                        if (item.Numbers is JsonElement je)
+                        {
+                            if (je.ValueKind == JsonValueKind.Array)
+                            {
+                                var nums = je.EnumerateArray()
+                                    .Select(x => x.GetInt32())
+                                    .OrderBy(n => n)
+                                    .ToList();
+                                fieldsNumbers = string.Join(";", nums);
+                            }
+                            else
+                            {
+                                fieldsNumbers = je.GetString() ?? "";
+                                fieldCount = fieldsNumbers.Split('|').Length;
+                            }
+                        }
+                        else
+                        {
+                            fieldsNumbers = item.Numbers?.ToString() ?? "";
+                        }
+                    }
+
+                    var ticket = new LotteryTicket
+                    {
+                        UserId = userId,
+                        DrawId = draw.Id,
+                        TicketCode = await _lotteryService.GenerateTicketCode(_context),
+                        FieldsNumbers = fieldsNumbers,
+                        Fields = fieldCount,
+                        FieldsFilled = (byte)fieldCount,
+                        IsQuickPick = item.Type == "extra",
+                        TotalPrice = item.Price,
+                        Status = "active",
+                        BoughtAt = DateTime.UtcNow
+                    };
+
+                    _context.LotteryTickets.Add(ticket);
+
+                    createdTickets.Add(new
+                    {
+                        ticket.TicketCode,
+                        GameName = item.GameName,
+                        item.Price,
+                        FieldsNumbers = fieldsNumbers
                     });
                 }
             }
 
-            draw.TotalPayout = totalPayout;
+            var balanceBefore = user.Balance;
+            user.Balance -= totalPrice;
+
+            _context.Transactions.Add(new Transaction
+            {
+                UserId = userId,
+                Type = "ticket_purchase",
+                Amount = -totalPrice,
+                BalanceBefore = balanceBefore,
+                BalanceAfter = user.Balance,
+                Description = $"{createdTickets.Count} szelvény vásárlása",
+                CreatedAt = DateTime.UtcNow
+            });
+
             await _context.SaveChangesAsync();
             await transaction.CommitAsync();
 
             return Ok(new
             {
-                winningNumbers,
-                TotalTickets = tickets.Count,
-                Winners = winners,
-                TotalPayout = totalPayout
+                Message = "Sikeres vásárlás!",
+                NewBalance = user.Balance,
+                TicketsBought = createdTickets.Count,
+                Tickets = createdTickets
             });
         }
         catch (Exception ex)
         {
             await transaction.RollbackAsync();
-            return StatusCode(500, $"Hiba: {ex.Message}");
+            return StatusCode(500, new { message = $"Vásárlási hiba: {ex.Message}" });
         }
     }
+    private static string MapGameNameToType(string? gameName)
+        => (gameName?.ToLower() ?? "") switch
+        {
+            var n when n.Contains("ötös") || n.Contains("otos") => "Lottery5",
+            var n when n.Contains("hatos") => "Lottery6",
+            var n when n.Contains("skandináv") || n.Contains("skandi") => "Scandinavian",
+            var n when n.Contains("eurojackpot") || n.Contains("euro") => "Eurojackpot",
+            var n when n.Contains("joker") => "Joker",
+            var n when n.Contains("kenó") || n.Contains("keno") => "Keno",
+            _ => "Lottery5"
+        };
 }

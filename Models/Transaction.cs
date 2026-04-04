@@ -5,7 +5,7 @@ public class Transaction
     public long Id { get; set; }
     public long UserId { get; set; }
     public User User { get; set; } = null!;
-    public string Type { get; set; } = string.Empty; // ticket_purchase, win_payout
+    public string Type { get; set; } = string.Empty; 
     public decimal Amount { get; set; }
     public decimal BalanceBefore { get; set; }
     public decimal BalanceAfter { get; set; }

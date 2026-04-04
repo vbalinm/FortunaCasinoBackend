@@ -52,7 +52,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> ResendConfirmation()
     {
         var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-        var user = await _authService.GetUserById(userId); // Ezt add hozzá az IAuthService-hez!
+        var user = await _authService.GetUserById(userId); 
 
         if (user == null || user.EmailConfirmed)
             return BadRequest("Már megerősített email vagy nem található");

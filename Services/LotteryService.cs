@@ -16,7 +16,6 @@ public class LotteryService : ILotteryService
             if (nums.Count != 5) return false;
             if (nums.Any(n => n < 1 || n > 90)) return false;
             if (nums.Distinct().Count() != 5) return false;
-
             var sorted = nums.OrderBy(n => n).ToList();
             return nums.SequenceEqual(sorted);
         }
@@ -56,23 +55,18 @@ public class LotteryService : ILotteryService
             _ => 0
         };
     }
-
     public async Task<string> GenerateTicketCode(AppDbContext context)
     {
-        var prefix = $"LOT{DateTime.Now:yyMM}";
-        var lastTicket = await context.LotteryTickets
-            .Where(t => t.TicketCode.StartsWith(prefix))
-            .OrderByDescending(t => t.TicketCode)
-            .FirstOrDefaultAsync();
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        var random = new Random();
 
-        int sequence = 1;
-        if (lastTicket != null)
+        for (int attempt = 0; attempt < 30; attempt++) 
         {
-            var lastSequence = lastTicket.TicketCode.Substring(9);
-            if (int.TryParse(lastSequence, out var seq))
-                sequence = seq + 1;
+            var code = new string(Enumerable.Repeat(chars, 12)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+            if (!await context.LotteryTickets.AnyAsync(t => t.TicketCode == code))
+                return code;
         }
-
-        return $"{prefix}{sequence:D5}";
+        return "T" + Guid.NewGuid().ToString("N").Substring(0, 16);
     }
 }
