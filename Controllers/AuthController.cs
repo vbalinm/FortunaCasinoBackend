@@ -2,7 +2,6 @@
 using FortunaCasino.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace FortunaCasino.Controllers;
 
@@ -11,10 +10,12 @@ namespace FortunaCasino.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly ICurrentUserService _currentUser;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, ICurrentUserService currentUser)
     {
         _authService = authService;
+        _currentUser = currentUser;
     }
 
     [HttpPost("register")]
@@ -32,11 +33,9 @@ public class AuthController : ControllerBase
         var result = await _authService.LoginAsync(request);
         if (result == null)
             return Unauthorized("Hibás adatok vagy nem erősítetted meg az email címedet");
-
         return Ok(result);
     }
 
-    // Megerősítés (marad a meglévő)
     [HttpGet("confirm-email")]
     public async Task<IActionResult> ConfirmEmail(long userId, string token)
     {
@@ -46,13 +45,12 @@ public class AuthController : ControllerBase
             : BadRequest("Érvénytelen token");
     }
 
-    // Újraküldés gombhoz (bejelentkezett usernek)
     [Authorize]
     [HttpPost("resend-confirmation")]
     public async Task<IActionResult> ResendConfirmation()
     {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-        var user = await _authService.GetUserById(userId); 
+        var userId = _currentUser.GetUserId();
+        var user = await _authService.GetUserById(userId);
 
         if (user == null || user.EmailConfirmed)
             return BadRequest("Már megerősített email vagy nem található");
@@ -63,19 +61,16 @@ public class AuthController : ControllerBase
             : BadRequest("Hiba történt");
     }
 
-    // Státusz lekérdezés (profil oldalhoz)
     [Authorize]
     [HttpGet("email-status")]
     public async Task<IActionResult> GetEmailStatus()
     {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var userId = _currentUser.GetUserId();
         var user = await _authService.GetUserById(userId);
 
-        return Ok(new
-        {
-            Email = user.Email,
-            IsConfirmed = user.EmailConfirmed
-        });
+        if (user == null) return NotFound();
+
+        return Ok(new { Email = user.Email, IsConfirmed = user.EmailConfirmed });
     }
 
     [Authorize]

@@ -9,7 +9,7 @@ public interface IAuthService
     Task<AuthResponse?> LoginAsync(LoginRequest request);
     Task<bool> ConfirmEmailAsync(long userId, string token);
     Task<bool> ResendConfirmationAsync(string email);
-    Task<User?> GetUserById(long id);  // EZ KELL!
+    Task<User?> GetUserById(long id);
     string GenerateJwtToken(User user);
     Task<object> GetAll();
 }
