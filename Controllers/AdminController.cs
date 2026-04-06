@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using FortunaCasino.Data;
 using FortunaCasino.DTOs;
 using FortunaCasino.Models;
+using FortunaCasino.Services.Interfaces;
 
 namespace FortunaCasino.Controllers
 {
@@ -13,55 +14,138 @@ namespace FortunaCasino.Controllers
     public class AdminController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ICurrentUserService _currentUser;
 
-        public AdminController(AppDbContext context)
+        public AdminController(AppDbContext context, ICurrentUserService currentUser)
         {
             _context = context;
+            _currentUser = currentUser;
         }
 
         //Statisztikák
         [HttpGet("stats")]
         public async Task<IActionResult> GetStats()
         {
+            var now = DateTime.UtcNow;
+            var todayStart = now.Date;
+            var weekStart = todayStart.AddDays(-(int)todayStart.DayOfWeek);
+            var monthStart = new DateTime(now.Year, now.Month, 1);
+
+            //Felhasználók
             var totalUsers = await _context.Users.CountAsync();
             var activeUsers = await _context.Users.CountAsync(u => u.IsActive);
+            var newToday = await _context.Users.CountAsync(u => u.CreatedAt >= todayStart);
+            var newThisWeek = await _context.Users.CountAsync(u => u.CreatedAt >= weekStart);
+
+            //Szelvények
             var totalTickets = await _context.LotteryTickets.CountAsync();
+            var activeTickets = await _context.LotteryTickets.CountAsync(t => t.Status == "active");
+            var ticketsToday = await _context.LotteryTickets.CountAsync(t => t.BoughtAt >= todayStart);
+
+            //Bevételek
             var totalRevenue = await _context.Transactions
                 .Where(t => t.Type == "ticket_purchase")
                 .SumAsync(t => -t.Amount);
 
-            var todayStart = DateTime.UtcNow.Date;
             var todayRevenue = await _context.Transactions
                 .Where(t => t.Type == "ticket_purchase" && t.CreatedAt >= todayStart)
                 .SumAsync(t => -t.Amount);
 
+            var weekRevenue = await _context.Transactions
+                .Where(t => t.Type == "ticket_purchase" && t.CreatedAt >= weekStart)
+                .SumAsync(t => -t.Amount);
+
+            var monthRevenue = await _context.Transactions
+                .Where(t => t.Type == "ticket_purchase" && t.CreatedAt >= monthStart)
+                .SumAsync(t => -t.Amount);
+
+            //Kifizetett nyeremények
+            var totalPayouts = await _context.Transactions
+                .Where(t => t.Type == "win_payout")
+                .SumAsync(t => t.Amount);
+
+            // Játékonkénti bontás
+            var gameStats = await _context.LotteryTickets
+                .Include(t => t.Draw)
+                .GroupBy(t => t.Draw.GameType)
+                .Select(g => new
+                {
+                    GameType = g.Key,
+                    Count = g.Count(),
+                    Revenue = g.Sum(t => t.TotalPrice)
+                })
+                .OrderByDescending(g => g.Count)
+                .ToListAsync();
+
+            //Havi bevétel (utolsó 6 hónap)
+            var monthlyRevenue = await _context.Transactions
+                .Where(t => t.Type == "ticket_purchase" && t.CreatedAt >= now.AddMonths(-6))
+                .GroupBy(t => new { t.CreatedAt.Year, t.CreatedAt.Month })
+                .Select(g => new
+                {
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    Revenue = g.Sum(t => -t.Amount),
+                    Count = g.Count()
+                })
+                .OrderBy(g => g.Year).ThenBy(g => g.Month)
+                .ToListAsync();
+
+            //Összes egyenleg a rendszerben
+            var totalBalance = await _context.Users.SumAsync(u => u.Balance);
+
             return Ok(new
             {
+                //Felhasználók
                 TotalUsers = totalUsers,
                 ActiveUsers = activeUsers,
+                NewToday = newToday,
+                NewThisWeek = newThisWeek,
+
+                //Szelvények
                 TotalTickets = totalTickets,
+                ActiveTickets = activeTickets,
+                TicketsToday = ticketsToday,
+
+                //Bevételek
                 TotalRevenue = totalRevenue,
-                TodayRevenue = todayRevenue
+                TodayRevenue = todayRevenue,
+                WeekRevenue = weekRevenue,
+                MonthRevenue = monthRevenue,
+                TotalPayouts = totalPayouts,
+                TotalBalance = totalBalance,
+
+                //Részletes bontások
+                GameStats = gameStats,
+                MonthlyRevenue = monthlyRevenue
             });
         }
 
         //Összes felhasználó
         [HttpGet("users")]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery] string? search = null)
         {
-            var users = await _context.Users
+            var query = _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+                query = query.Where(u => u.Username.Contains(search) || u.Email.Contains(search));
+
+            var users = await query
                 .OrderByDescending(u => u.CreatedAt)
                 .Select(u => new
                 {
-                    Id = u.Id,
-                    Username = u.Username,
-                    Email = u.Email,
-                    Balance = u.Balance,
-                    IsActive = u.IsActive,
+                    u.Id,
+                    u.Username,
+                    u.Email,
+                    u.Balance,
+                    u.IsActive,
                     Status = u.IsActive ? "active" : "banned",
-                    CreatedAt = u.CreatedAt,
+                    u.CreatedAt,
+                    u.LastLoginAt,
+                    u.EmailConfirmed,
                     Roles = u.UserRoles.Select(ur => ur.Role.RoleName).ToList()
                 })
                 .ToListAsync();
@@ -101,47 +185,72 @@ namespace FortunaCasino.Controllers
                 .Take(pageSize)
                 .Select(t => new
                 {
-                    Id = t.Id,
-                    TicketCode = t.TicketCode,
+                    t.Id,
+                    t.TicketCode,
                     Username = t.User.Username,
                     GameType = t.Draw != null ? t.Draw.GameType : "Lottery5",
-                    FieldsNumbers = t.FieldsNumbers,
-                    TotalPrice = t.TotalPrice,
-                    Status = t.Status,
-                    BoughtAt = t.BoughtAt
+                    t.FieldsNumbers,
+                    t.TotalPrice,
+                    t.TotalWinAmount,
+                    t.Status,
+                    t.BoughtAt
                 })
                 .ToListAsync();
 
             return Ok(tickets);
         }
 
-        //Demo egyenleg feltöltés
+        //Admin egyenleg feltöltés usernek
         [HttpPost("users/{id}/add-balance")]
         public async Task<IActionResult> AddDemoBalance(long id, [FromBody] AddBalanceRequest request)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null) return NotFound("Felhasználó nem található");
 
-            if (request.Amount <= 0 || request.Amount > 100000)
-                return BadRequest("Összeg 1 és 100 000 Ft között lehet");
+            if (request.Amount <= 0)
+                return BadRequest("Az összegnek pozitívnak kell lennie");
 
+            var adminId = _currentUser.GetUserId();
             var oldBalance = user.Balance;
             user.Balance += request.Amount;
 
             _context.Transactions.Add(new Transaction
             {
                 UserId = id,
-                Type = "demo_topup",
+                Type = "admin_topup",
                 Amount = request.Amount,
                 BalanceBefore = oldBalance,
                 BalanceAfter = user.Balance,
-                Description = $"Demo feltöltés: +{request.Amount} Ft",
+                Description = $"Admin feltöltés (admin: {adminId}): +{request.Amount:N0} Ft",
                 CreatedAt = DateTime.UtcNow
             });
 
             await _context.SaveChangesAsync();
 
             return Ok(new { UserId = id, OldBalance = oldBalance, NewBalance = user.Balance });
+        }
+
+        //Aktív sorsolások listája
+        [HttpGet("draws")]
+        public async Task<IActionResult> GetDraws()
+        {
+            var draws = await _context.LotteryDraws
+                .OrderByDescending(d => d.DrawDate)
+                .Select(d => new
+                {
+                    d.Id,
+                    d.GameType,
+                    d.DrawDate,
+                    d.TicketPrice,
+                    d.IsDrawn,
+                    d.IsActive,
+                    d.TotalTicketsSold,
+                    d.TotalPayout,
+                    d.WinningNumbers
+                })
+                .ToListAsync();
+
+            return Ok(draws);
         }
     }
 }
@@ -152,4 +261,4 @@ namespace FortunaCasino.DTOs
     {
         public bool IsActive { get; set; }
     }
-}
+}   
