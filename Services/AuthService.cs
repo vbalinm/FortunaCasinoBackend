@@ -121,7 +121,8 @@ public class AuthService : IAuthService
         user.EmailConfirmationToken = confirmationToken;
         await _context.SaveChangesAsync();
 
-        var confirmationLink = $"http://localhost:3000/confirm-email?token={confirmationToken}&userId={user.Id}";
+        var frontendUrl = _config["Frontend:BaseUrl"] ?? "http://localhost:5173";
+        var confirmationLink = $"{frontendUrl}/confirm-email?token={confirmationToken}&userId={user.Id}";
 
         var emailBody = $@"
             <h2>Kedves {user.Username}!</h2>
