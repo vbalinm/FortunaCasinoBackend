@@ -25,7 +25,7 @@ public class AuthService : IAuthService
         _emailService = emailService;
     }
 
-    // 1. REGISZTRÁCIÓ - Küld emailt, de NEM ad tokent (csak megerősítés után)
+    //Regisztráció
     public async Task<AuthResponse?> RegisterAsync(RegisterRequest request)
     {
         if (await _context.Users.AnyAsync(u => u.Username == request.Username))
@@ -52,7 +52,7 @@ public class AuthService : IAuthService
         // Email küldés (ha nem megy, nem baj)
         try
         {
-            var confirmationLink = $"http://localhost:3000/confirm-email?token={confirmationToken}&userId={user.Id}";
+            var confirmationLink = $"http://localhost:5173/confirm-email?token={confirmationToken}&userId={user.Id}";
 
             var emailBody = $@"
             <h2>Kedves {request.Username}!</h2>
@@ -76,7 +76,7 @@ public class AuthService : IAuthService
         };
     }
 
-    // 2. BEJELENTKEZÉS - Nem ellenőrzi az emailt, AZONNAL beenged
+    //Bejelentkezés
     public async Task<AuthResponse?> LoginAsync(LoginRequest request)
     {
         var user = await _context.Users
@@ -86,8 +86,6 @@ public class AuthService : IAuthService
 
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             return null;
-
-        // NINCS email ellenőrzés! Szabadon bejelentkezhet!
 
         user.LastLoginAt = DateTime.UtcNow;
         await _context.SaveChangesAsync();
@@ -99,7 +97,7 @@ public class AuthService : IAuthService
         };
     }
 
-    // 3. EMAIL MEGERŐSÍTÉS - Linkre kattintáskor
+    //Emailes megerősítés
     public async Task<bool> ConfirmEmailAsync(long userId, string token)
     {
         var user = await _context.Users.FindAsync(userId);
@@ -112,7 +110,7 @@ public class AuthService : IAuthService
         return true;
     }
 
-    // 4. EMAIL ÚJRAKÜLDÉS - Külön gombra
+    //Email újraküldés
     public async Task<bool> ResendConfirmationAsync(string email)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
@@ -140,7 +138,7 @@ public class AuthService : IAuthService
         return true;
     }
 
-    // 5. USER LEKÉRDEZÉS ID ALAPJÁN - Az újraküldéshez kell
+    //User id lekérdezés
     public async Task<User?> GetUserById(long id)
     {
         return await _context.Users
@@ -149,7 +147,7 @@ public class AuthService : IAuthService
             .FirstOrDefaultAsync(u => u.Id == id);
     }
 
-    // 6. JWT TOKEN GENERÁLÁS
+    //Jwt token generálás
     public string GenerateJwtToken(User user)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
@@ -174,7 +172,7 @@ public class AuthService : IAuthService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    // 7. DTO KONVERTÁLÁS - EmailConfirmed-del kibővítve
+    //DTO konvertálás
     private static UserDto MapToDto(User user) => new()
     {
         Id = user.Id,
@@ -184,7 +182,7 @@ public class AuthService : IAuthService
         EmailConfirmed = user.EmailConfirmed
     };
 
-    // 8. ÖSSZES USER LEKÉRDEZÉSE
+    //Összes user lekérdezése
     public async Task<object> GetAll()
     {
         return await _context.Users.ToListAsync();

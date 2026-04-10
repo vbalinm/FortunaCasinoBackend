@@ -4,10 +4,10 @@ using FortunaCasino.Models;
 using FortunaCasino.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using FortunaCasino.Helpers;
 
 namespace FortunaCasino.Controllers
-{ 
+{
     [ApiController]
     [Route("api/balance")]
     [Authorize]
@@ -25,13 +25,15 @@ namespace FortunaCasino.Controllers
         [HttpPost("topup")]
         public async Task<IActionResult> TopUp([FromBody] TopUpRequest request)
         {
-            if (request.Amount <= 0)
-                return BadRequest(new { message = "Az összegnek pozitívnak kell lennie" });
+            var validation = ValidationHelper.ValidateTopUpAmount(request.Amount);
+            if (!validation.IsValid)
+                return BadRequest(new { message = validation.ErrorMessage });
 
             var userId = _currentUser.GetUserId();
             var user = await _context.Users.FindAsync(userId);
 
-            if (user == null) return NotFound();
+            if (user == null) return NotFound(new { message = "Felhasználó nem található" });
+            if (!user.IsActive) return Forbid();
 
             var oldBalance = user.Balance;
             user.Balance += request.Amount;
@@ -57,15 +59,17 @@ namespace FortunaCasino.Controllers
             });
         }
 
-        [HttpPost("admin/topup/{userId}")]
+        [HttpPost("admin/topup/{targetUserId}")]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> AdminTopUp(long userId, [FromBody] TopUpRequest request)
+        public async Task<IActionResult> AdminTopUp(long targetUserId, [FromBody] TopUpRequest request)
         {
-            if (request.Amount <= 0)
-                return BadRequest(new { message = "Az összegnek pozitívnak kell lennie" });
+            var validation = ValidationHelper.ValidateTopUpAmount(request.Amount);
+            if (!validation.IsValid)
+                return BadRequest(new { message = validation.ErrorMessage });
 
-            var user = await _context.Users.FindAsync(userId);
-            if (user == null) return NotFound(new { message = "Felhasználó nem található" });
+            var user = await _context.Users.FindAsync(targetUserId);
+            if (user == null)
+                return NotFound(new { message = "Felhasználó nem található" });
 
             var adminId = _currentUser.GetUserId();
             var oldBalance = user.Balance;
@@ -73,7 +77,7 @@ namespace FortunaCasino.Controllers
 
             _context.Transactions.Add(new Transaction
             {
-                UserId = userId,
+                UserId = targetUserId,
                 Type = "admin_topup",
                 Amount = request.Amount,
                 BalanceBefore = oldBalance,
@@ -87,7 +91,7 @@ namespace FortunaCasino.Controllers
             return Ok(new
             {
                 Message = "Sikeres admin feltöltés!",
-                UserId = userId,
+                UserId = targetUserId,
                 Username = user.Username,
                 NewBalance = user.Balance,
                 Added = request.Amount
@@ -101,5 +105,5 @@ namespace FortunaCasino.Controllers
         {
             public decimal Amount { get; set; }
         }
-    }
+}
 }

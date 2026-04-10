@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using FortunaCasino.Helpers;
 
 namespace FortunaCasino.Controllers;
 
@@ -68,8 +69,11 @@ public class LotteryController : ControllerBase
     [HttpPost("tickets/purchase")]
     public async Task<IActionResult> PurchaseTickets([FromBody] PurchaseRequest request)
     {
-        if (request.Tickets == null || request.Tickets.Count == 0)
+        if (request?.Tickets == null || request.Tickets.Count == 0)
             return BadRequest(new { message = "Legalább egy szelvény szükséges" });
+
+        if (request.Tickets.Count > 50)
+            return BadRequest(new { message = "Maximum 50 szelvény küldhető egyszerre" });
 
         var userId = _currentUser.GetUserId();
 
@@ -77,15 +81,10 @@ public class LotteryController : ControllerBase
         try
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            if (user == null) return Unauthorized();
+            if (user == null) return Unauthorized(new { message = "Felhasználó nem található" });
 
-            decimal totalPrice = request.Tickets.Sum(item => item.Price * item.Quantity);
-
-            if (totalPrice <= 0)
-                return BadRequest(new { message = "Érvénytelen összeg" });
-
-            if (user.Balance < totalPrice)
-                return BadRequest(new { message = "Nincs elegendő egyenleg" });
+            if (!user.IsActive)
+                return Forbid();
 
             var activeDraws = await _context.LotteryDraws
                 .Where(d => d.IsActive && !d.IsDrawn)
@@ -94,48 +93,76 @@ public class LotteryController : ControllerBase
             if (activeDraws.Count == 0)
                 return BadRequest(new { message = "Nincs aktív sorsolás" });
 
+            var validationErrors = new List<string>();
+            decimal totalPrice = 0;
+
+            for (int i = 0; i < request.Tickets.Count; i++)
+            {
+                var item = request.Tickets[i];
+                var prefix = $"Szelvény #{i + 1}";
+
+                //Ár validáció
+                var priceCheck = ValidationHelper.ValidatePrice(item.Price, item.Price);
+                if (item.Price <= 0)
+                    validationErrors.Add($"{prefix}: Az ár nem lehet nulla vagy negatív");
+
+                //Mennyiség validáció
+                var qtyCheck = ValidationHelper.ValidateQuantity(item.Quantity);
+                if (!qtyCheck.IsValid)
+                    validationErrors.Add($"{prefix}: {qtyCheck.ErrorMessage}");
+
+                //Típus validáció
+                if (string.IsNullOrWhiteSpace(item.Type) ||
+                    !new[] { "panel", "extra", "joker" }.Contains(item.Type))
+                    validationErrors.Add($"{prefix}: Érvénytelen szelvény típus '{item.Type}'");
+
+                // Számok validáció (ha van)
+                if (item.Numbers != null && item.Type != "extra")
+                {
+                    var numbersStr = ExtractNumbersString(item.Numbers, item.Type);
+                    var gameType = MapGameNameToType(item.GameName);
+                    var numCheck = ValidationHelper.ValidateNumbers(numbersStr, gameType);
+                    if (!numCheck.IsValid)
+                        validationErrors.Add($"{prefix}: {numCheck.ErrorMessage}");
+                }
+
+                totalPrice += item.Price * item.Quantity;
+            }
+
+            if (validationErrors.Count > 0)
+                return BadRequest(new { message = "Validációs hiba", errors = validationErrors });
+
+            //Egyenleg ellenőrzés
+            if (totalPrice <= 0)
+                return BadRequest(new { message = "Érvénytelen végösszeg" });
+
+            if (user.Balance < totalPrice)
+                return BadRequest(new
+                {
+                    message = "Nincs elegendő egyenleg",
+                    required = totalPrice,
+                    available = user.Balance,
+                    missing = totalPrice - user.Balance
+                });
+
+            //Szelvények létrehozása
             var createdTickets = new List<object>();
 
             foreach (var item in request.Tickets)
             {
-                if (item.Price <= 0 || item.Quantity <= 0)
-                    return BadRequest(new { message = "Érvénytelen ár vagy mennyiség" });
-
                 var gameType = MapGameNameToType(item.GameName);
                 var draw = activeDraws.FirstOrDefault(d => d.GameType == gameType)
-                        ?? activeDraws.First();
+                            ?? activeDraws.First();
 
                 for (int q = 0; q < item.Quantity; q++)
                 {
-                    string fieldsNumbers;
-                    int fieldCount = 1;
+                    var fieldsNumbers = item.Type == "extra"
+                        ? _lotteryService.GenerateRandomNumbers()
+                        : ExtractNumbersString(item.Numbers, item.Type);
 
-                    if (item.Type == "joker")
-                    {
-                        fieldsNumbers = item.Numbers is JsonElement je2
-                            ? je2.GetString() ?? ""
-                            : item.Numbers?.ToString() ?? "";
-                    }
-                    else if (item.Numbers is JsonElement je)
-                    {
-                        if (je.ValueKind == JsonValueKind.Array)
-                        {
-                            var nums = je.EnumerateArray()
-                                .Select(x => x.GetInt32())
-                                .OrderBy(n => n)
-                                .ToList();
-                            fieldsNumbers = string.Join(";", nums);
-                        }
-                        else
-                        {
-                            fieldsNumbers = je.GetString() ?? "";
-                            fieldCount = fieldsNumbers.Split('|').Length;
-                        }
-                    }
-                    else
-                    {
-                        fieldsNumbers = item.Numbers?.ToString() ?? "";
-                    }
+                    int fieldCount = string.IsNullOrEmpty(fieldsNumbers)
+                        ? 0
+                        : fieldsNumbers.Split('|').Length;
 
                     var ticket = new LotteryTicket
                     {
@@ -152,10 +179,17 @@ public class LotteryController : ControllerBase
                     };
 
                     _context.LotteryTickets.Add(ticket);
-                    createdTickets.Add(new { ticket.TicketCode, GameName = item.GameName, item.Price, FieldsNumbers = fieldsNumbers });
+                    createdTickets.Add(new
+                    {
+                        ticket.TicketCode,
+                        GameName = item.GameName,
+                        item.Price,
+                        FieldsNumbers = fieldsNumbers
+                    });
                 }
             }
 
+            //Egyenleg levonás + tranzakció
             var balanceBefore = user.Balance;
             user.Balance -= totalPrice;
 
@@ -186,6 +220,30 @@ public class LotteryController : ControllerBase
             await dbTransaction.RollbackAsync();
             return StatusCode(500, new { message = $"Vásárlási hiba: {ex.Message}" });
         }
+    }
+
+    //Számok kinyerése a JSON elemből
+    private static string ExtractNumbersString(object? numbers, string type)
+    {
+        if (numbers == null) return string.Empty;
+
+        if (type == "joker")
+            return numbers is JsonElement je2 ? je2.GetString() ?? "" : numbers.ToString() ?? "";
+
+        if (numbers is JsonElement je)
+        {
+            if (je.ValueKind == JsonValueKind.Array)
+            {
+                var nums = je.EnumerateArray()
+                    .Select(x => x.GetInt32())
+                    .OrderBy(n => n)
+                    .ToList();
+                return string.Join(";", nums);
+            }
+            return je.GetString() ?? "";
+        }
+
+        return numbers.ToString() ?? "";
     }
 
     private static string MapGameNameToType(string? gameName)
