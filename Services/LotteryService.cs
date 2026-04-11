@@ -8,6 +8,79 @@ public class LotteryService : ILotteryService
 {
     private readonly Random _random = new();
 
+    //Játékszabályok
+    private static readonly Dictionary<string, (int Min, int Max, int Pick, int? BonusMin, int? BonusMax, int BonusPick)> GameRules = new()
+    {
+        { "Lottery5",     (1,  90, 5, null, null, 0) },
+        { "Lottery6",     (1,  45, 6, null, null, 0) },
+        { "Scandinavian", (1,  35, 7, null, null, 0) },
+        { "Eurojackpot",  (1,  50, 5, 1,   12,   2) },
+        { "Keno",         (1,  80, 10, null, null, 0) },
+        { "Joker",        (0,   9, 6, null, null, 0) },
+    };
+
+    //Nyeremény táblázatok
+    private static readonly Dictionary<string, Dictionary<(int, int), decimal>> PrizeTables = new()
+    {
+        ["Lottery5"] = new()
+        {
+            { (5, 0), 10000m },
+            { (4, 0), 100m   },
+            { (3, 0), 10m    },
+            { (2, 0), 2m     },
+        },
+        ["Lottery6"] = new()
+        {
+            { (6, 0), 10000m },
+            { (5, 0), 500m   },
+            { (4, 0), 50m    },
+            { (3, 0), 5m     },
+        },
+        ["Scandinavian"] = new()
+        {
+            { (7, 0), 10000m },
+            { (6, 0), 1000m  },
+            { (5, 0), 100m   },
+            { (4, 0), 10m    },
+            { (3, 0), 2m     },
+        },
+        ["Eurojackpot"] = new()
+        {
+            { (5, 2), 100000m },
+            { (5, 1), 5000m   },
+            { (5, 0), 1000m   },
+            { (4, 2), 500m    },
+            { (4, 1), 100m    },
+            { (4, 0), 50m     },
+            { (3, 2), 20m     },
+            { (2, 2), 15m     },
+            { (3, 1), 10m     },
+            { (3, 0), 5m      },
+            { (1, 2), 5m      },
+            { (2, 1), 3m      },
+        },
+        ["Keno"] = new()
+        {
+            { (10, 0), 10000m },
+            { (9,  0), 1000m  },
+            { (8,  0), 100m   },
+            { (7,  0), 20m    },
+            { (6,  0), 10m    },
+            { (5,  0), 3m     },
+        },
+        ["Joker"] = new()
+        {
+            { (6, 0), 10000m },
+            { (5, 0), 1000m  },
+            { (4, 0), 100m   },
+            { (3, 0), 10m    },
+            { (2, 0), 2m     },
+            { (1, 0), 1m     },
+        },
+    };
+
+    //Meglávő metódusok
+
     public bool ValidateNumbers(string numbers)
     {
         try
@@ -16,32 +89,28 @@ public class LotteryService : ILotteryService
             if (nums.Count != 5) return false;
             if (nums.Any(n => n < 1 || n > 90)) return false;
             if (nums.Distinct().Count() != 5) return false;
-            var sorted = nums.OrderBy(n => n).ToList();
-            return nums.SequenceEqual(sorted);
+            return nums.SequenceEqual(nums.OrderBy(n => n).ToList());
         }
-        catch
-        {
-            return false;
-        }
+        catch { return false; }
     }
 
     public string GenerateRandomNumbers()
     {
-        var numbers = new List<int>();
+        var numbers = new HashSet<int>();
         while (numbers.Count < 5)
-        {
-            var num = _random.Next(1, 91);
-            if (!numbers.Contains(num))
-                numbers.Add(num);
-        }
+            numbers.Add(_random.Next(1, 91));
         return string.Join(";", numbers.OrderBy(n => n));
     }
 
     public int CalculateMatches(string ticketNumbers, string winningNumbers)
     {
-        var ticket = ticketNumbers.Split(';').Select(int.Parse).ToList();
-        var winning = winningNumbers.Split(';').Select(int.Parse).ToList();
-        return ticket.Intersect(winning).Count();
+        try
+        {
+            var ticket = ticketNumbers.Split(';').Select(int.Parse).ToHashSet();
+            var winning = winningNumbers.Split(';').Select(int.Parse).ToHashSet();
+            return ticket.Intersect(winning).Count();
+        }
+        catch { return 0; }
     }
 
     public decimal CalculatePrize(int matches, decimal ticketPrice)
@@ -55,18 +124,141 @@ public class LotteryService : ILotteryService
             _ => 0
         };
     }
+
     public async Task<string> GenerateTicketCode(AppDbContext context)
     {
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        var random = new Random();
+        var prefix = $"LOT{DateTime.Now:yyMM}";
+        var lastTicket = await context.LotteryTickets
+            .Where(t => t.TicketCode.StartsWith(prefix))
+            .OrderByDescending(t => t.TicketCode)
+            .FirstOrDefaultAsync();
 
-        for (int attempt = 0; attempt < 30; attempt++) 
+        int sequence = 1;
+        if (lastTicket != null)
         {
-            var code = new string(Enumerable.Repeat(chars, 12)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
-            if (!await context.LotteryTickets.AnyAsync(t => t.TicketCode == code))
-                return code;
+            var lastSeq = lastTicket.TicketCode[9..];
+            if (int.TryParse(lastSeq, out var seq))
+                sequence = seq + 1;
         }
-        return "T" + Guid.NewGuid().ToString("N").Substring(0, 16);
+
+        return $"{prefix}{sequence:D5}";
+    }
+
+    //Újabb metódusok
+
+    //Játéktípusonkénti szám generálás
+    public string GenerateNumbersForGame(string gameType)
+    {
+        if (!GameRules.TryGetValue(gameType, out var rule))
+            return GenerateRandomNumbers();
+
+        if (gameType == "Joker")
+        {
+            //Joker
+            var digits = Enumerable.Range(0, 6).Select(_ => _random.Next(0, 10));
+            return string.Join("", digits);
+        }
+
+        var numbers = new HashSet<int>();
+        while (numbers.Count < rule.Pick)
+            numbers.Add(_random.Next(rule.Min, rule.Max + 1));
+
+        var mainNumbers = string.Join(";", numbers.OrderBy(n => n));
+
+        //Eurojackpot
+        if (rule.BonusPick > 0 && rule.BonusMin.HasValue && rule.BonusMax.HasValue)
+        {
+            var bonus = new HashSet<int>();
+            while (bonus.Count < rule.BonusPick)
+                bonus.Add(_random.Next(rule.BonusMin.Value, rule.BonusMax.Value + 1));
+            return $"{mainNumbers}+{string.Join(";", bonus.OrderBy(n => n))}";
+        }
+
+        return mainNumbers;
+    }
+
+    //Játéktípusonkénti validáció
+    public bool ValidateNumbersForGame(string numbers, string gameType)
+    {
+        if (string.IsNullOrWhiteSpace(numbers)) return false;
+        if (!GameRules.TryGetValue(gameType, out var rule)) return false;
+
+        try
+        {
+            if (gameType == "Joker")
+                return numbers.Length == 6 && numbers.All(char.IsDigit);
+
+            // Eurojackpot: "1;2;3;4;5+1;2" formátum
+            if (gameType == "Eurojackpot" && numbers.Contains('+'))
+            {
+                var parts = numbers.Split('+');
+                var mainNums = parts[0].Split(';').Select(int.Parse).ToList();
+                var bonusNums = parts[1].Split(';').Select(int.Parse).ToList();
+                return mainNums.Count == rule.Pick
+                    && bonusNums.Count == rule.BonusPick
+                    && mainNums.All(n => n >= rule.Min && n <= rule.Max)
+                    && bonusNums.All(n => n >= rule.BonusMin!.Value && n <= rule.BonusMax!.Value)
+                    && mainNums.Distinct().Count() == mainNums.Count
+                    && bonusNums.Distinct().Count() == bonusNums.Count;
+            }
+
+            var nums = numbers.Split(';').Select(int.Parse).ToList();
+            return nums.Count == rule.Pick
+                && nums.All(n => n >= rule.Min && n <= rule.Max)
+                && nums.Distinct().Count() == nums.Count;
+        }
+        catch { return false; }
+    }
+
+    //Játéktípusonkénti találat számítás
+    public int CalculateMatchesForGame(string ticketNumbers, string winningNumbers, string gameType)
+    {
+        try
+        {
+            if (gameType == "Joker")
+            {
+                //Joker egymás utáni egyező számjegyek az elejéről
+                int count = 0;
+                for (int i = 0; i < Math.Min(ticketNumbers.Length, winningNumbers.Length); i++)
+                {
+                    if (ticketNumbers[i] == winningNumbers[i]) count++;
+                    else break;
+                }
+                return count;
+            }
+
+            //Eurojackpot main számok
+            if (ticketNumbers.Contains('+'))
+                ticketNumbers = ticketNumbers.Split('+')[0];
+            if (winningNumbers.Contains('+'))
+                winningNumbers = winningNumbers.Split('+')[0];
+
+            var ticket = ticketNumbers.Split(';').Select(int.Parse).ToHashSet();
+            var winning = winningNumbers.Split(';').Select(int.Parse).ToHashSet();
+            return ticket.Intersect(winning).Count();
+        }
+        catch { return 0; }
+    }
+
+    //Bónusz találatok (Eurojackpot)
+    public int CalculateBonusMatchesForGame(string ticketNumbers, string winningNumbers, string gameType)
+    {
+        if (gameType != "Eurojackpot") return 0;
+        try
+        {
+            if (!ticketNumbers.Contains('+') || !winningNumbers.Contains('+')) return 0;
+            var ticketBonus = ticketNumbers.Split('+')[1].Split(';').Select(int.Parse).ToHashSet();
+            var winningBonus = winningNumbers.Split('+')[1].Split(';').Select(int.Parse).ToHashSet();
+            return ticketBonus.Intersect(winningBonus).Count();
+        }
+        catch { return 0; }
+    }
+
+    //Játéktípusonkénti nyeremény számítás
+    public decimal CalculatePrizeForGame(int matches, int bonusMatches, string gameType, decimal ticketPrice)
+    {
+        if (!PrizeTables.TryGetValue(gameType, out var table)) return 0;
+        var key = (matches, bonusMatches);
+        return table.TryGetValue(key, out var multiplier) ? ticketPrice * multiplier : 0;
     }
 }
