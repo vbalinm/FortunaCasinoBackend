@@ -71,7 +71,7 @@ public class AuthService : IAuthService
 
         return new AuthResponse
         {
-            Token = null,
+            Token = null!,
             User = MapToDto(user)
         };
     }
@@ -182,6 +182,48 @@ public class AuthService : IAuthService
         Roles = user.Roles,
         EmailConfirmed = user.EmailConfirmed
     };
+
+    public async Task<bool> ForgotPasswordAsync(string email)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (user == null) return true;
+
+        var resetToken = Guid.NewGuid().ToString("N");
+        user.PasswordResetToken = resetToken;
+        user.PasswordResetExpires = DateTime.UtcNow.AddHours(1);
+        await _context.SaveChangesAsync();
+
+        var frontendUrl = _config["Frontend:BaseUrl"] ?? "http://localhost:5173";
+        var resetLink = $"{frontendUrl}/reset-password?token={resetToken}&userId={user.Id}";
+
+        var emailBody = $@"
+            <h2>Jelszó visszaállítás</h2>
+            <p>Kedves <strong>{user.Username}</strong>!</p>
+            <a href='{resetLink}' style='padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;'>
+                Jelszó visszaállítása
+            </a>
+            <p style='color:#888;font-size:13px;'>Ez a link 1 óráig érvényes.</p>";
+
+        await _emailService.SendEmailAsync(user.Email, "FortunaCasino - Jelszó visszaállítás", emailBody);
+        return true;
+    }
+
+    //Jelszó reset
+    public async Task<bool> ResetPasswordAsync(string token, long userId, string newPassword)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null
+            || user.PasswordResetToken != token
+            || user.PasswordResetExpires == null
+            || user.PasswordResetExpires < DateTime.UtcNow)
+            return false;
+
+        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+        user.PasswordResetToken = null;
+        user.PasswordResetExpires = null;
+        await _context.SaveChangesAsync();
+        return true;
+    }
 
     //Összes user lekérdezése
     public async Task<object> GetAll()

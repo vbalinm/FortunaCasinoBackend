@@ -15,7 +15,9 @@ public class User
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public bool EmailConfirmed { get; set; } = false;
     public string? EmailConfirmationToken { get; set; }
+    public string? PasswordResetToken { get; set; }
+    public DateTime? PasswordResetExpires { get; set; }
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
-    public List<string> Roles => UserRoles?.Select(ur => ur.Role?.RoleName).Where(r => r != null).ToList() ?? new List<string>();
+    public List<string> Roles => UserRoles?.Select(ur => ur.Role?.RoleName ?? string.Empty).Where(r => !string.IsNullOrEmpty(r)).ToList() ?? new List<string>();
 }

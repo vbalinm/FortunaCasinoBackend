@@ -1,4 +1,7 @@
-﻿using FortunaCasino.DTOs.Auth;
+﻿using LoginRequest = FortunaCasino.DTOs.Auth.LoginRequest;
+using RegisterRequest = FortunaCasino.DTOs.Auth.RegisterRequest;
+using ResetPasswordRequest = FortunaCasino.DTOs.Auth.ResetPasswordRequest;
+using ForgotPasswordRequest = FortunaCasino.DTOs.Auth.ForgotPasswordRequest;
 using FortunaCasino.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -67,11 +70,37 @@ public class AuthController : ControllerBase
     {
         var userId = _currentUser.GetUserId();
         var user = await _authService.GetUserById(userId);
-
         if (user == null) return NotFound();
 
         return Ok(new { Email = user.Email, IsConfirmed = user.EmailConfirmed });
     }
+
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Email))
+            return BadRequest(new { message = "Email cím megadása kötelező" });
+
+        await _authService.ForgotPasswordAsync(request.Email);
+        return Ok(new { message = "Ha ez az email cím regisztrálva van, küldtünk egy linket." });
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        if (request.NewPassword.Length < 6)
+            return BadRequest(new { message = "A jelszónak legalább 6 karakter hosszúnak kell lennie" });
+
+        if (request.NewPassword != request.ConfirmPassword)
+            return BadRequest(new { message = "A két jelszó nem egyezik" });
+
+        var result = await _authService.ResetPasswordAsync(request.Token, request.UserId, request.NewPassword);
+        return result
+            ? Ok(new { message = "Jelszó sikeresen megváltoztatva!" })
+            : BadRequest(new { message = "Érvénytelen vagy lejárt token." });
+    }
+
+
 
     [Authorize]
     [HttpGet]

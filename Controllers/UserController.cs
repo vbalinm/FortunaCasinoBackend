@@ -74,6 +74,23 @@ namespace FortunaCasino.Controllers
 
             return Ok(new { user.Id, user.Username, user.Email });
         }
+
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            var userId = _currentUser.GetUserId();
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) return NotFound();
+
+            if (!BCrypt.Net.BCrypt.Verify(request.CurrentPassword, user.PasswordHash))
+                return BadRequest(new { message = "A jelenlegi jelszó helytelen" });
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+            user.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Jelszó sikeresen megváltoztatva!" });
+        }
     }
 
     namespace FortunaCasino.DTOs
@@ -82,6 +99,11 @@ namespace FortunaCasino.Controllers
         {
             public string? Username { get; set; }
             public string? Email { get; set; }
+        }
+        public class ChangePasswordRequest
+        {
+            public string CurrentPassword { get; set; } = string.Empty;
+            public string NewPassword { get; set; } = string.Empty;
         }
     }
 }
