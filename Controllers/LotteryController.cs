@@ -117,7 +117,8 @@ public class LotteryController : ControllerBase
                     validationErrors.Add($"{prefix}: Érvénytelen szelvény típus '{item.Type}'");
 
                 // Számok validáció (ha van)
-                if (item.Numbers != null && item.Type != "extra")
+                if (item.Numbers != null && item.Type != "extra" &&
+                    MapGameNameToType(item.GameName) != "Keno")
                 {
                     var numbersStr = ExtractNumbersString(item.Numbers, item.Type);
                     var gameType = MapGameNameToType(item.GameName);
@@ -145,6 +146,36 @@ public class LotteryController : ControllerBase
                     missing = totalPrice - user.Balance
                 });
 
+            // Összes szükséges ticket kód előre generálása
+            int totalTicketsNeeded = request.Tickets.Sum(item => item.Quantity);
+            var ticketCodes = new List<string>();
+
+            for (int i = 0; i < totalTicketsNeeded; i++)
+            {
+                string code;
+                do
+                {
+                    var codePrefix = $"LOT{DateTime.Now:yyMM}";
+                    var lastTicket = await _context.LotteryTickets
+                        .Where(t => t.TicketCode.StartsWith(codePrefix))
+                        .OrderByDescending(t => t.TicketCode)
+                        .FirstOrDefaultAsync();
+
+                    int sequence = 1;
+                    if (lastTicket != null)
+                    {
+                        var lastSeq = lastTicket.TicketCode[9..];
+                        if (int.TryParse(lastSeq, out var seq))
+                            sequence = seq + 1;
+                    }
+                    sequence += ticketCodes.Count;
+                    code = $"{codePrefix}{sequence:D5}";
+                } while (ticketCodes.Contains(code) ||
+                         await _context.LotteryTickets.AnyAsync(t => t.TicketCode == code));
+
+                ticketCodes.Add(code);
+            }
+
             //Szelvények létrehozása
             var createdTickets = new List<object>();
 
@@ -168,7 +199,7 @@ public class LotteryController : ControllerBase
                     {
                         UserId = userId,
                         DrawId = draw.Id,
-                        TicketCode = await _lotteryService.GenerateTicketCode(_context),
+                        TicketCode = ticketCodes[createdTickets.Count],
                         FieldsNumbers = fieldsNumbers,
                         Fields = fieldCount,
                         FieldsFilled = (byte)fieldCount,

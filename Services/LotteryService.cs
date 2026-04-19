@@ -128,20 +128,25 @@ public class LotteryService : ILotteryService
     public async Task<string> GenerateTicketCode(AppDbContext context)
     {
         var prefix = $"LOT{DateTime.Now:yyMM}";
-        var lastTicket = await context.LotteryTickets
-            .Where(t => t.TicketCode.StartsWith(prefix))
-            .OrderByDescending(t => t.TicketCode)
-            .FirstOrDefaultAsync();
-
-        int sequence = 1;
-        if (lastTicket != null)
+        string code;
+        do
         {
-            var lastSeq = lastTicket.TicketCode[9..];
-            if (int.TryParse(lastSeq, out var seq))
-                sequence = seq + 1;
-        }
+            var lastTicket = await context.LotteryTickets
+                .Where(t => t.TicketCode.StartsWith(prefix))
+                .OrderByDescending(t => t.TicketCode)
+                .FirstOrDefaultAsync();
 
-        return $"{prefix}{sequence:D5}";
+            int sequence = 1;
+            if (lastTicket != null)
+            {
+                var lastSeq = lastTicket.TicketCode[9..];
+                if (int.TryParse(lastSeq, out var seq))
+                    sequence = seq + 1;
+            }
+            code = $"{prefix}{sequence:D5}";
+        } while (await context.LotteryTickets.AnyAsync(t => t.TicketCode == code));
+
+        return code;
     }
 
     //Újabb metódusok
