@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FortunaCasino.Controllers
-{ 
+{
     [ApiController]
     [Route("api/admin/draws")]
     [Authorize(Roles = "admin")]
@@ -25,7 +25,7 @@ namespace FortunaCasino.Controllers
             _currentUser = currentUser;
         }
 
-        //Sorsolások listája (szűrésekkel)
+        // Sorsolások listája (szűrésekkel)
         [HttpGet]
         public async Task<IActionResult> GetDraws(
             [FromQuery] string? gameType = null,
@@ -64,7 +64,7 @@ namespace FortunaCasino.Controllers
             return Ok(draws);
         }
 
-        //Egy sorsolás részletei + nyertesek
+        // Egy sorsolás részletei + nyertesek
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDraw(long id)
         {
@@ -114,7 +114,7 @@ namespace FortunaCasino.Controllers
             });
         }
 
-        //Új sorsolás létrehozása
+        // Új sorsolás létrehozása
         [HttpPost("create")]
         public async Task<IActionResult> CreateDraw([FromBody] CreateDrawRequest request)
         {
@@ -149,7 +149,7 @@ namespace FortunaCasino.Controllers
             });
         }
 
-        //Sorsolás aktiválása / deaktiválása
+        // Sorsolás aktiválása / deaktiválása
         [HttpPut("{id}/toggle-active")]
         public async Task<IActionResult> ToggleActive(long id)
         {
@@ -163,7 +163,31 @@ namespace FortunaCasino.Controllers
             return Ok(new { drawId = id, isActive = draw.IsActive });
         }
 
-        //Sorsolások végrehajtása
+        //Sorsolás törlése
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteDraw(long id)
+        {
+            var draw = await _context.LotteryDraws.FindAsync(id);
+            if (draw == null)
+                return NotFound(new { message = "Sorsolás nem található" });
+
+            if (draw.IsDrawn)
+                return BadRequest(new { message = "Lezárt sorsolást nem lehet törölni" });
+
+            var tickets = await _context.LotteryTickets
+                .Where(t => t.DrawId == id)
+                .ToListAsync();
+
+            if (tickets.Any())
+                _context.LotteryTickets.RemoveRange(tickets);
+
+            _context.LotteryDraws.Remove(draw);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Sorsolás sikeresen törölve!" });
+        }
+
+        // Sorsolás végrehajtása
         [HttpPost("{id}/execute")]
         public async Task<IActionResult> ExecuteDraw(long id)
         {
@@ -182,8 +206,6 @@ namespace FortunaCasino.Controllers
             try
             {
                 var adminId = _currentUser.GetUserId();
-
-                //Nyerőszámok generálása játéktípusonként
                 var winningNumbers = _lotteryService.GenerateNumbersForGame(draw.GameType);
 
                 draw.WinningNumbers = winningNumbers;
@@ -191,7 +213,6 @@ namespace FortunaCasino.Controllers
                 draw.DrawnAt = DateTime.UtcNow;
                 draw.DrawnBy = adminId;
 
-                //Aktív szelvények lekérése
                 var tickets = await _context.LotteryTickets
                     .Include(t => t.User)
                     .Where(t => t.DrawId == id && t.Status == "active")
@@ -208,15 +229,12 @@ namespace FortunaCasino.Controllers
 
                     if (!string.IsNullOrEmpty(ticket.FieldsNumbers))
                     {
-                        //Több mező: "|" elválasztóval
                         var fields = ticket.FieldsNumbers.Split('|', StringSplitOptions.RemoveEmptyEntries);
 
                         foreach (var field in fields)
                         {
-                            //Főszámok találatai
                             var matches = _lotteryService.CalculateMatchesForGame(field, winningNumbers, draw.GameType);
 
-                            //Bónusz találatok (Eurojackpot)
                             var bonusMatches = draw.GameType == "Eurojackpot"
                                 ? ((LotteryService)_lotteryService).CalculateBonusMatchesForGame(field, winningNumbers, draw.GameType)
                                 : 0;
@@ -227,7 +245,6 @@ namespace FortunaCasino.Controllers
                         }
                     }
 
-                    //Találatok és státusz frissítése
                     ticket.MatchesNumbers = (byte)totalMatches;
                     ticket.TotalWinAmount = winAmount;
                     ticket.Status = "drawn";
@@ -262,7 +279,6 @@ namespace FortunaCasino.Controllers
                     }
                 }
 
-                //Sorsolás összesítő frissítése
                 draw.TotalTicketsSold = tickets.Count;
                 draw.TotalPayout = totalPayout;
 
@@ -288,7 +304,7 @@ namespace FortunaCasino.Controllers
             }
         }
 
-        //Sorsolás eredményei (nyertesek listája)
+        // Sorsolás eredményei
         [HttpGet("{id}/results")]
         public async Task<IActionResult> GetResults(long id)
         {
