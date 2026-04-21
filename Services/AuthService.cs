@@ -49,25 +49,59 @@ public class AuthService : IAuthService
         _context.UserRoles.Add(new UserRole { UserId = user.Id, RoleId = 1 });
         await _context.SaveChangesAsync();
 
-        // Email küldés (ha nem megy, nem baj)
+        // ✅ Szép email megerősítő sablon
         try
         {
             var confirmationLink = $"http://localhost:5173/confirm-email?token={confirmationToken}&userId={user.Id}";
 
             var emailBody = $@"
-            <h2>Kedves {request.Username}!</h2>
-            <p>Köszönjük a regisztrációt!</p>
-            <a href='{confirmationLink}' style='padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;'>
-               Email megerősítése
-            </a>
-        ";
+                <div style='font-family:Segoe UI,sans-serif;max-width:600px;margin:0 auto;'>
+                    <div style='background:linear-gradient(135deg,#f59e0b,#ea580c);padding:30px;border-radius:12px 12px 0 0;text-align:center;'>
+                        <h1 style='color:white;margin:0;font-size:28px;'>🎰 Fortuna Lotto</h1>
+                        <p style='color:rgba(255,255,255,0.9);margin:8px 0 0;font-size:16px;'>Üdvözlünk a családban!</p>
+                    </div>
+                    <div style='background:#fff;padding:30px;border-radius:0 0 12px 12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);'>
+                        <h2 style='color:#1f2937;margin-top:0;'>Kedves {request.Username}! 👋</h2>
+                        <p style='color:#4b5563;line-height:1.6;'>
+                            Köszönjük a regisztrációt! Már csak egy lépés választ el attól, 
+                            hogy elkezdd a játékot. Erősítsd meg az email címedet az alábbi gombra kattintva.
+                        </p>
+
+                        <div style='text-align:center;margin:30px 0;'>
+                            <a href='{confirmationLink}' 
+                               style='background:linear-gradient(135deg,#f59e0b,#ea580c);
+                                      color:white;
+                                      text-decoration:none;
+                                      padding:14px 32px;
+                                      border-radius:8px;
+                                      font-weight:bold;
+                                      font-size:16px;
+                                      display:inline-block;'>
+                                ✅ Email megerősítése
+                            </a>
+                        </div>
+
+                        <div style='background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:15px;margin:20px 0;'>
+                            <p style='margin:0;color:#92400e;font-size:14px;'>
+                                🎁 <strong>Bónusz:</strong> Sikeres megerősítés után 10 000 Ft egyenleg vár rád!
+                            </p>
+                        </div>
+
+                        <p style='color:#9ca3af;font-size:13px;margin-top:20px;'>
+                            Ha nem te regisztráltál, hagyd figyelmen kívül ezt az emailt.<br/>
+                            A link 24 óráig érvényes.
+                        </p>
+                        <hr style='border:none;border-top:1px solid #e5e7eb;margin:20px 0;'/>
+                        <p style='color:#9ca3af;font-size:12px;text-align:center;margin:0;'>
+                            © {DateTime.Now.Year} Fortuna Lotto · Minden jog fenntartva
+                        </p>
+                    </div>
+                </div>";
 
             await _emailService.SendEmailAsync(request.Email,
-                "FortunaCasino - Email megerősítés", emailBody);
+                "🎰 Fortuna Lotto - Erősítsd meg az email címedet!", emailBody);
         }
-        catch
-        {
-        }
+        catch { }
 
         return new AuthResponse
         {
@@ -129,17 +163,46 @@ public class AuthService : IAuthService
         var frontendUrl = _config["Frontend:BaseUrl"] ?? "http://localhost:5173";
         var confirmationLink = $"{frontendUrl}/confirm-email?token={confirmationToken}&userId={user.Id}";
 
+        // ✅ Szép újraküldés sablon
         var emailBody = $@"
-            <h2>Kedves {user.Username}!</h2>
-            <p>Új megerősítő link:</p>
-            <a href='{confirmationLink}' 
-               style='padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;'>
-               Email megerősítése
-            </a>
-        ";
+            <div style='font-family:Segoe UI,sans-serif;max-width:600px;margin:0 auto;'>
+                <div style='background:linear-gradient(135deg,#f59e0b,#ea580c);padding:30px;border-radius:12px 12px 0 0;text-align:center;'>
+                    <h1 style='color:white;margin:0;font-size:28px;'>🎰 Fortuna Lotto</h1>
+                    <p style='color:rgba(255,255,255,0.9);margin:8px 0 0;font-size:16px;'>Email megerősítés</p>
+                </div>
+                <div style='background:#fff;padding:30px;border-radius:0 0 12px 12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);'>
+                    <h2 style='color:#1f2937;margin-top:0;'>Kedves {user.Username}! 👋</h2>
+                    <p style='color:#4b5563;line-height:1.6;'>
+                        Új megerősítő linket kértél. Kattints az alábbi gombra az email cím megerősítéséhez.
+                    </p>
+
+                    <div style='text-align:center;margin:30px 0;'>
+                        <a href='{confirmationLink}' 
+                           style='background:linear-gradient(135deg,#f59e0b,#ea580c);
+                                  color:white;
+                                  text-decoration:none;
+                                  padding:14px 32px;
+                                  border-radius:8px;
+                                  font-weight:bold;
+                                  font-size:16px;
+                                  display:inline-block;'>
+                            ✅ Email megerősítése
+                        </a>
+                    </div>
+
+                    <p style='color:#9ca3af;font-size:13px;margin-top:20px;'>
+                        Ha nem te kérted, hagyd figyelmen kívül ezt az emailt.<br/>
+                        A link 24 óráig érvényes.
+                    </p>
+                    <hr style='border:none;border-top:1px solid #e5e7eb;margin:20px 0;'/>
+                    <p style='color:#9ca3af;font-size:12px;text-align:center;margin:0;'>
+                        © {DateTime.Now.Year} Fortuna Lotto · Minden jog fenntartva
+                    </p>
+                </div>
+            </div>";
 
         await _emailService.SendEmailAsync(user.Email,
-            "FortunaCasino - Email megerősítés (újra)", emailBody);
+            "🎰 Fortuna Lotto - Email megerősítés (újra)", emailBody);
 
         return true;
     }
@@ -201,15 +264,53 @@ public class AuthService : IAuthService
         var frontendUrl = _config["Frontend:BaseUrl"] ?? "http://localhost:5173";
         var resetLink = $"{frontendUrl}/reset-password?token={resetToken}&userId={user.Id}";
 
+        // ✅ Szép jelszó visszaállítás sablon
         var emailBody = $@"
-            <h2>Jelszó visszaállítás</h2>
-            <p>Kedves <strong>{user.Username}</strong>!</p>
-            <a href='{resetLink}' style='padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;'>
-                Jelszó visszaállítása
-            </a>
-            <p style='color:#888;font-size:13px;'>Ez a link 1 óráig érvényes.</p>";
+            <div style='font-family:Segoe UI,sans-serif;max-width:600px;margin:0 auto;'>
+                <div style='background:linear-gradient(135deg,#dc2626,#b91c1c);padding:30px;border-radius:12px 12px 0 0;text-align:center;'>
+                    <h1 style='color:white;margin:0;font-size:28px;'>🔒 Fortuna Lotto</h1>
+                    <p style='color:rgba(255,255,255,0.9);margin:8px 0 0;font-size:16px;'>Jelszó visszaállítás</p>
+                </div>
+                <div style='background:#fff;padding:30px;border-radius:0 0 12px 12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);'>
+                    <h2 style='color:#1f2937;margin-top:0;'>Kedves {user.Username}! 👋</h2>
+                    <p style='color:#4b5563;line-height:1.6;'>
+                        Jelszó visszaállítást kértél a fiókodhoz. 
+                        Kattints az alábbi gombra az új jelszó beállításához.
+                    </p>
 
-        await _emailService.SendEmailAsync(user.Email, "FortunaCasino - Jelszó visszaállítás", emailBody);
+                    <div style='text-align:center;margin:30px 0;'>
+                        <a href='{resetLink}' 
+                           style='background:linear-gradient(135deg,#dc2626,#b91c1c);
+                                  color:white;
+                                  text-decoration:none;
+                                  padding:14px 32px;
+                                  border-radius:8px;
+                                  font-weight:bold;
+                                  font-size:16px;
+                                  display:inline-block;'>
+                            🔑 Jelszó visszaállítása
+                        </a>
+                    </div>
+
+                    <div style='background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:15px;margin:20px 0;'>
+                        <p style='margin:0;color:#991b1b;font-size:14px;'>
+                            ⚠️ <strong>Figyelem:</strong> Ez a link <strong>1 óráig</strong> érvényes.<br/>
+                            Ha nem te kérted a visszaállítást, azonnal változtasd meg a jelszavadat!
+                        </p>
+                    </div>
+
+                    <p style='color:#9ca3af;font-size:13px;margin-top:20px;'>
+                        Ha nem tudod megnyitni a gombot, másold be ezt a linket a böngésződbe:<br/>
+                        <a href='{resetLink}' style='color:#f59e0b;word-break:break-all;'>{resetLink}</a>
+                    </p>
+                    <hr style='border:none;border-top:1px solid #e5e7eb;margin:20px 0;'/>
+                    <p style='color:#9ca3af;font-size:12px;text-align:center;margin:0;'>
+                        © {DateTime.Now.Year} Fortuna Lotto · Minden jog fenntartva
+                    </p>
+                </div>
+            </div>";
+
+        await _emailService.SendEmailAsync(user.Email, "🔒 Fortuna Lotto - Jelszó visszaállítás", emailBody);
         return true;
     }
 
