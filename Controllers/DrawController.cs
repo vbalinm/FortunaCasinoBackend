@@ -121,7 +121,7 @@ namespace FortunaCasino.Controllers
             if (string.IsNullOrWhiteSpace(request.GameType))
                 return BadRequest(new { message = "Játéktípus megadása kötelező" });
 
-            if (request.DrawDate <= DateTime.UtcNow)
+            if (request.DrawDate <= DateTime.Now)
                 return BadRequest(new { message = "A sorsolás dátuma jövőbeli kell legyen" });
 
             if (request.TicketPrice <= 0)
@@ -134,7 +134,7 @@ namespace FortunaCasino.Controllers
                 TicketPrice = request.TicketPrice,
                 IsActive = true,
                 IsDrawn = false,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now
             };
 
             _context.LotteryDraws.Add(draw);
@@ -210,7 +210,7 @@ namespace FortunaCasino.Controllers
 
                 draw.WinningNumbers = winningNumbers;
                 draw.IsDrawn = true;
-                draw.DrawnAt = DateTime.UtcNow;
+                draw.DrawnAt = DateTime.Now;
                 draw.DrawnBy = adminId;
 
                 var tickets = await _context.LotteryTickets
@@ -265,7 +265,7 @@ namespace FortunaCasino.Controllers
                             BalanceAfter = ticket.User.Balance,
                             TicketId = ticket.Id,
                             Description = $"Nyeremény: {ticket.TicketCode} ({draw.GameType})",
-                            CreatedAt = DateTime.UtcNow
+                            CreatedAt = DateTime.Now
                         });
 
                         winnerList.Add(new

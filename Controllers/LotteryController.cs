@@ -17,12 +17,14 @@ public class LotteryController : ControllerBase
     private readonly AppDbContext _context;
     private readonly ILotteryService _lotteryService;
     private readonly ICurrentUserService _currentUser;
+    private readonly IEmailService _emailService;
 
-    public LotteryController(AppDbContext context, ILotteryService lotteryService, ICurrentUserService currentUser)
+    public LotteryController(AppDbContext context, ILotteryService lotteryService, ICurrentUserService currentUser, IEmailService emailService)
     {
         _context = context;
         _lotteryService = lotteryService;
         _currentUser = currentUser;
+        _emailService = emailService;
     }
 
     [HttpGet("lottery/draws")]
@@ -101,22 +103,17 @@ public class LotteryController : ControllerBase
                 var item = request.Tickets[i];
                 var prefix = $"Szelvény #{i + 1}";
 
-                //Ár validáció
-                var priceCheck = ValidationHelper.ValidatePrice(item.Price, item.Price);
                 if (item.Price <= 0)
                     validationErrors.Add($"{prefix}: Az ár nem lehet nulla vagy negatív");
 
-                //Mennyiség validáció
                 var qtyCheck = ValidationHelper.ValidateQuantity(item.Quantity);
                 if (!qtyCheck.IsValid)
                     validationErrors.Add($"{prefix}: {qtyCheck.ErrorMessage}");
 
-                //Típus validáció
                 if (string.IsNullOrWhiteSpace(item.Type) ||
                     !new[] { "panel", "extra", "joker" }.Contains(item.Type))
                     validationErrors.Add($"{prefix}: Érvénytelen szelvény típus '{item.Type}'");
 
-                // Számok validáció (ha van)
                 if (item.Numbers != null && item.Type != "extra" &&
                     MapGameNameToType(item.GameName) != "Keno")
                 {
@@ -133,7 +130,6 @@ public class LotteryController : ControllerBase
             if (validationErrors.Count > 0)
                 return BadRequest(new { message = "Validációs hiba", errors = validationErrors });
 
-            //Egyenleg ellenőrzés
             if (totalPrice <= 0)
                 return BadRequest(new { message = "Érvénytelen végösszeg" });
 
@@ -176,8 +172,8 @@ public class LotteryController : ControllerBase
                 ticketCodes.Add(code);
             }
 
-            //Szelvények létrehozása
-            var createdTickets = new List<object>();
+            // Szelvények létrehozása
+            var createdTickets = new List<(string TicketCode, string GameName, decimal Price, string FieldsNumbers)>();
 
             foreach (var item in request.Tickets)
             {
@@ -210,17 +206,11 @@ public class LotteryController : ControllerBase
                     };
 
                     _context.LotteryTickets.Add(ticket);
-                    createdTickets.Add(new
-                    {
-                        ticket.TicketCode,
-                        GameName = item.GameName,
-                        item.Price,
-                        FieldsNumbers = fieldsNumbers
-                    });
+                    createdTickets.Add((ticketCodes[createdTickets.Count], item.GameName ?? "", item.Price, fieldsNumbers));
                 }
             }
 
-            //Egyenleg levonás + tranzakció
+            // Egyenleg levonás + tranzakció
             var balanceBefore = user.Balance;
             user.Balance -= totalPrice;
 
@@ -238,12 +228,73 @@ public class LotteryController : ControllerBase
             await _context.SaveChangesAsync();
             await dbTransaction.CommitAsync();
 
+            //Vásárlási visszaigazoló email
+            try
+            {
+                var ticketRows = string.Join("", createdTickets.Select(t => $@"
+                    <tr>
+                        <td style='padding:8px;border-bottom:1px solid #eee;font-family:monospace;'>{t.TicketCode}</td>
+                        <td style='padding:8px;border-bottom:1px solid #eee;'>{t.GameName}</td>
+                        <td style='padding:8px;border-bottom:1px solid #eee;'>{t.FieldsNumbers}</td>
+                        <td style='padding:8px;border-bottom:1px solid #eee;text-align:right;'>{t.Price:N0} Ft</td>
+                    </tr>"));
+
+                var emailBody = $@"
+                    <div style='font-family:Segoe UI,sans-serif;max-width:600px;margin:0 auto;'>
+                        <div style='background:linear-gradient(135deg,#f59e0b,#ea580c);padding:30px;border-radius:12px 12px 0 0;text-align:center;'>
+                            <h1 style='color:white;margin:0;'>🎟️ Sikeres vásárlás!</h1>
+                            <p style='color:rgba(255,255,255,0.9);margin:8px 0 0;'>Fortuna Lotto</p>
+                        </div>
+                        <div style='background:#fff;padding:30px;border-radius:0 0 12px 12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);'>
+                            <p>Kedves <strong>{user.Username}</strong>!</p>
+                            <p>Sikeresen leadtad a szelvényeidet. Összefoglaló:</p>
+
+                            <table style='width:100%;border-collapse:collapse;margin:20px 0;'>
+                                <thead>
+                                    <tr style='background:#f9f9f9;'>
+                                        <th style='padding:10px;text-align:left;border-bottom:2px solid #eee;'>Kód</th>
+                                        <th style='padding:10px;text-align:left;border-bottom:2px solid #eee;'>Játék</th>
+                                        <th style='padding:10px;text-align:left;border-bottom:2px solid #eee;'>Számok</th>
+                                        <th style='padding:10px;text-align:right;border-bottom:2px solid #eee;'>Ár</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {ticketRows}
+                                </tbody>
+                            </table>
+
+                            <div style='background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:15px;margin:20px 0;'>
+                                <p style='margin:0;color:#16a34a;font-weight:bold;'>
+                                    💰 Levont összeg: {totalPrice:N0} Ft<br/>
+                                    💳 Új egyenleg: {user.Balance:N0} Ft
+                                </p>
+                            </div>
+
+                            <p style='color:#888;font-size:13px;'>Sok szerencsét kívánunk! 🍀</p>
+                            <p style='color:#888;font-size:13px;'>— Fortuna Lotto csapata</p>
+                        </div>
+                    </div>";
+
+                await _emailService.SendEmailAsync(
+                    user.Email,
+                    $"🎟️ Fortuna Lotto - Sikeres vásárlás ({createdTickets.Count} szelvény)",
+                    emailBody
+                );
+            }
+            catch { /* Email hiba nem akasztja meg a vásárlást */ }
+
             return Ok(new
             {
                 Message = "Sikeres vásárlás!",
                 NewBalance = user.Balance,
                 TicketsBought = createdTickets.Count,
-                Tickets = createdTickets
+                Tickets = createdTickets.Select(t => new
+                {
+                    t.TicketCode,
+                    t.GameName,
+                    t.Price,
+                    FieldsNumbers = t.FieldsNumbers
+                })
             });
         }
         catch (Exception ex)
@@ -253,7 +304,7 @@ public class LotteryController : ControllerBase
         }
     }
 
-    //Számok kinyerése a JSON elemből
+    // Számok kinyerése a JSON elemből
     private static string ExtractNumbersString(object? numbers, string type)
     {
         if (numbers == null) return string.Empty;

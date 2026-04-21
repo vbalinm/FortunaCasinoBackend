@@ -87,9 +87,14 @@ public class AuthService : IAuthService
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             return null;
 
+        if (!user.IsActive)
+        {
+            Console.WriteLine($"[BAN] {user.Username} kitiltott felhasználó próbált belépni!");
+            return new AuthResponse { IsBanned = true };
+        }
+
         user.LastLoginAt = DateTime.UtcNow;
         await _context.SaveChangesAsync();
-
         return new AuthResponse
         {
             Token = GenerateJwtToken(user),

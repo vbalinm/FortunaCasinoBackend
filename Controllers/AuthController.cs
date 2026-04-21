@@ -35,7 +35,9 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.LoginAsync(request);
         if (result == null)
-            return Unauthorized("Hibás adatok vagy nem erősítetted meg az email címedet");
+            return Unauthorized(new { message = "Hibás felhasználónév vagy jelszó!" });
+        if (result.IsBanned)
+            return Unauthorized(new { message = "banned" });
         return Ok(result);
     }
 
