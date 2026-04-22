@@ -26,7 +26,7 @@ namespace FortunaCasino.Controllers
         [HttpGet("stats")]
         public async Task<IActionResult> GetStats()
         {
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
             var todayStart = now.Date;
             var weekStart = todayStart.AddDays(-(int)todayStart.DayOfWeek);
             var monthStart = new DateTime(now.Year, now.Month, 1);
@@ -69,7 +69,7 @@ namespace FortunaCasino.Controllers
             var completedDraws = await _context.LotteryDraws.CountAsync(d => d.IsDrawn);
             var activeDraws = await _context.LotteryDraws.CountAsync(d => d.IsActive && !d.IsDrawn);
             var pendingDraws = await _context.LotteryDraws
-                .Where(d => !d.IsDrawn && d.IsActive && d.DrawDate <= DateTime.UtcNow)
+                .Where(d => !d.IsDrawn && d.IsActive && d.DrawDate <= DateTime.Now)
                 .CountAsync();
 
             return Ok(new
@@ -135,7 +135,7 @@ namespace FortunaCasino.Controllers
             if (user == null) return NotFound("Felhasználó nem található");
 
             user.IsActive = request.IsActive;
-            user.UpdatedAt = DateTime.UtcNow;
+            user.UpdatedAt = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return Ok(new { UserId = id, IsActive = user.IsActive, Status = user.IsActive ? "active" : "banned" });
@@ -186,7 +186,7 @@ namespace FortunaCasino.Controllers
                 BalanceBefore = oldBalance,
                 BalanceAfter = user.Balance,
                 Description = $"Admin feltöltés (admin: {adminId}): +{request.Amount:N0} Ft",
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now
             });
 
             await _context.SaveChangesAsync();

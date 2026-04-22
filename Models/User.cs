@@ -11,8 +11,8 @@ public class User
     public decimal Balance { get; set; } = 100.00m;
     public bool IsActive { get; set; } = true;
     public DateTime? LastLoginAt { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
     public bool EmailConfirmed { get; set; } = false;
     public string? EmailConfirmationToken { get; set; }
     public string? PasswordResetToken { get; set; }

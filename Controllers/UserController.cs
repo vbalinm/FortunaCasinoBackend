@@ -69,7 +69,7 @@ namespace FortunaCasino.Controllers
                 user.EmailConfirmed = false;
             }
 
-            user.UpdatedAt = DateTime.UtcNow;
+            user.UpdatedAt = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return Ok(new { user.Id, user.Username, user.Email });
@@ -86,7 +86,7 @@ namespace FortunaCasino.Controllers
                 return BadRequest(new { message = "A jelenlegi jelszó helytelen" });
 
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
-            user.UpdatedAt = DateTime.UtcNow;
+            user.UpdatedAt = DateTime.Now;
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Jelszó sikeresen megváltoztatva!" });

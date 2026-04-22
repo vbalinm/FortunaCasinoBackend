@@ -19,5 +19,5 @@ public class LotteryTicket
     public decimal TotalWinAmount { get; set; }
     public bool IsPaidOut { get; set; }
     public string Status { get; set; } = "active";
-    public DateTime BoughtAt { get; set; } = DateTime.UtcNow;
+    public DateTime BoughtAt { get; set; } = DateTime.Now;
 }

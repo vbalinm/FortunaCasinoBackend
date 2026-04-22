@@ -202,7 +202,7 @@ public class LotteryController : ControllerBase
                         IsQuickPick = item.Type == "extra",
                         TotalPrice = item.Price,
                         Status = "active",
-                        BoughtAt = DateTime.UtcNow
+                        BoughtAt = DateTime.Now
                     };
 
                     _context.LotteryTickets.Add(ticket);
@@ -222,7 +222,7 @@ public class LotteryController : ControllerBase
                 BalanceBefore = balanceBefore,
                 BalanceAfter = user.Balance,
                 Description = $"{createdTickets.Count} szelvény vásárlása",
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now
             });
 
             await _context.SaveChangesAsync();

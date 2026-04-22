@@ -127,7 +127,7 @@ public class AuthService : IAuthService
             return new AuthResponse { IsBanned = true };
         }
 
-        user.LastLoginAt = DateTime.UtcNow;
+        user.LastLoginAt = DateTime.Now;
         await _context.SaveChangesAsync();
         return new AuthResponse
         {
@@ -235,7 +235,7 @@ public class AuthService : IAuthService
             issuer: _config["Jwt:Issuer"],
             audience: _config["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(24),
+            expires: DateTime.Now.AddHours(24),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
@@ -258,7 +258,7 @@ public class AuthService : IAuthService
 
         var resetToken = Guid.NewGuid().ToString("N");
         user.PasswordResetToken = resetToken;
-        user.PasswordResetExpires = DateTime.UtcNow.AddHours(1);
+        user.PasswordResetExpires = DateTime.Now.AddHours(1);
         await _context.SaveChangesAsync();
 
         var frontendUrl = _config["Frontend:BaseUrl"] ?? "http://localhost:5173";
@@ -321,7 +321,7 @@ public class AuthService : IAuthService
         if (user == null
             || user.PasswordResetToken != token
             || user.PasswordResetExpires == null
-            || user.PasswordResetExpires < DateTime.UtcNow)
+            || user.PasswordResetExpires < DateTime.Now)
             return false;
 
         user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);

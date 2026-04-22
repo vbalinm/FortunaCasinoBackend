@@ -46,7 +46,7 @@ namespace FortunaCasino.Controllers
                 BalanceBefore = oldBalance,
                 BalanceAfter = user.Balance,
                 Description = $"Egyenleg feltöltés: +{request.Amount:N0} Ft",
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now
             });
 
             await _context.SaveChangesAsync();
@@ -83,7 +83,7 @@ namespace FortunaCasino.Controllers
                 BalanceBefore = oldBalance,
                 BalanceAfter = user.Balance,
                 Description = $"Admin feltöltés (admin ID: {adminId}): +{request.Amount:N0} Ft",
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now
             });
 
             await _context.SaveChangesAsync();
