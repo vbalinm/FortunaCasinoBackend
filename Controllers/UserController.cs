@@ -91,6 +91,19 @@ namespace FortunaCasino.Controllers
 
             return Ok(new { message = "Jelszó sikeresen megváltoztatva!" });
         }
+
+        [HttpDelete("delete-account")]
+        public async Task<IActionResult> DeleteAccount()
+        {
+            var userId = _currentUser.GetUserId();
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) return NotFound();
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Fiók sikeresen törölve" });
+        }
     }
 
     namespace FortunaCasino.DTOs

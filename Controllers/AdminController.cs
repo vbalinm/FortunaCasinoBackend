@@ -219,7 +219,39 @@ namespace FortunaCasino.Controllers
 
             return Ok(draws);
         }
+        // Zárolás állapotának lekérése
+        [HttpGet("settings/draw-lock")]
+        public async Task<IActionResult> GetDrawLock()
+        {
+            var setting = await _context.SystemSettings
+                .FirstOrDefaultAsync(s => s.Key == "draw_locked");
+            var isLocked = setting?.Value == "true";
+            return Ok(new { isLocked });
+        }
+
+        // Zárolás toggle
+        [HttpPost("settings/draw-lock/toggle")]
+        public async Task<IActionResult> ToggleDrawLock()
+        {
+            var setting = await _context.SystemSettings
+                .FirstOrDefaultAsync(s => s.Key == "draw_locked");
+
+            if (setting == null)
+            {
+                setting = new SystemSetting { Key = "draw_locked", Value = "true", UpdatedAt = DateTime.Now };
+                _context.SystemSettings.Add(setting);
+            }
+            else
+            {
+                setting.Value = setting.Value == "true" ? "false" : "true";
+                setting.UpdatedAt = DateTime.Now;
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok(new { isLocked = setting.Value == "true" });
+        }
     }
+
 }
 
 namespace FortunaCasino.DTOs

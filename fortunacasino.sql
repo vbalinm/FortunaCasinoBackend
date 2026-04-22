@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Ápr 22. 01:16
+-- Létrehozás ideje: 2026. Ápr 23. 01:06
 -- Kiszolgáló verziója: 10.4.20-MariaDB
 -- PHP verzió: 7.3.29
 
@@ -58,10 +58,11 @@ INSERT INTO `lotterydraws` (`Id`, `DrawDate`, `TicketPrice`, `WinningNumbers`, `
 (9, '2026-04-14 00:05:00.000000', '400.00', '14;43;49;54;72', 1, 1, 0, '0.00', '2026-04-14 00:05:03.923271', 9, '2026-04-14 00:04:52.215206', 'Lottery5'),
 (11, '2026-04-27 08:00:00.000000', '300.00', '8;16;23;35;37;39', 1, 1, 16, '0.00', '2026-04-19 23:36:58.883582', 9, '2026-04-19 23:35:40.917433', 'Lottery6'),
 (12, '2026-04-28 10:00:00.000000', '300.00', '1;2;3;4;5', 1, 1, 1, '150000.00', '2026-04-21 17:04:09.097337', 9, '2026-04-19 23:41:05.500067', 'Lottery6'),
-(13, '2026-04-22 17:02:00.000000', '400.00', NULL, 0, 1, 0, '0.00', NULL, NULL, '2026-04-21 17:02:24.661366', 'Scandinavian'),
+(13, '2026-04-22 17:02:00.000000', '400.00', '1;2;3;4;5;6;7', 1, 1, 1, '99999999.99', '2026-04-23 00:06:39.954908', 9, '2026-04-21 17:02:24.661366', 'Scandinavian'),
 (14, '2026-04-24 17:11:00.000000', '300.00', '1;2;3;4;5;6', 1, 1, 1, '3000000.00', '2026-04-21 17:12:20.055653', 9, '2026-04-21 17:11:23.655114', 'Lottery6'),
 (16, '2026-05-09 19:07:00.000000', '400.00', NULL, 0, 1, 0, '0.00', NULL, NULL, '2026-04-21 21:08:09.534607', 'Lottery6'),
-(17, '2026-05-07 19:08:00.000000', '350.00', NULL, 0, 1, 0, '0.00', NULL, NULL, '2026-04-21 21:08:20.075027', 'Keno');
+(17, '2026-05-07 19:08:00.000000', '350.00', NULL, 0, 1, 0, '0.00', NULL, NULL, '2026-04-21 21:08:20.075027', 'Keno'),
+(18, '2026-04-24 22:09:00.000000', '400.00', '1;2;3;4;5;6;7', 1, 1, 1, '99999999.99', '2026-04-23 00:10:57.130762', 9, '2026-04-23 00:10:10.114271', 'Scandinavian');
 
 -- --------------------------------------------------------
 
@@ -259,7 +260,37 @@ INSERT INTO `lotterytickets` (`Id`, `UserId`, `DrawId`, `TicketCode`, `FieldsNum
 (215, 23, 6, 'LOT260400073', '834608', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-21 18:54:07.773407'),
 (216, 9, 6, 'LOT260400074', '054936', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-21 19:58:52.819286'),
 (217, 9, 6, 'LOT260400075', '854410', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-21 19:58:52.845453'),
-(218, 9, 6, 'LOT260400076', '495526', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-21 19:58:52.846602');
+(218, 9, 6, 'LOT260400076', '495526', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-21 19:58:52.846602'),
+(219, 9, 1, 'LOT260400077', '1;2;7;8;42', 1, 1, 0, '400.00', NULL, NULL, '0.00', 0, 'active', '2026-04-22 19:40:26.162345'),
+(220, 9, 6, 'LOT260400078', '559263', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-22 19:47:55.973084'),
+(221, 9, 6, 'LOT260400079', '928994', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-22 21:49:00.086587'),
+(222, 9, 13, 'LOT260400080', '1;2;3;4;5;6;7', 1, 1, 0, '400.00', 7, NULL, '99999999.99', 1, 'drawn', '2026-04-23 00:06:26.615006'),
+(223, 23, 1, 'LOT260400081', '1;2;3;4;5;6;7', 1, 1, 0, '400.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:09:39.934254'),
+(224, 23, 18, 'LOT260400082', '1;2;3;4;5;6;7', 1, 1, 0, '400.00', 7, NULL, '99999999.99', 1, 'drawn', '2026-04-23 00:10:33.219737'),
+(225, 9, 6, 'LOT260400083', '154787', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:40:16.098376'),
+(226, 9, 6, 'LOT260400084', '204048', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:41:41.513542'),
+(227, 9, 6, 'LOT260400085', '887046', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:41:56.375157'),
+(228, 9, 6, 'LOT260400086', '455196', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:41:56.375429'),
+(229, 9, 6, 'LOT260400087', '802937', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:41:56.375565'),
+(230, 9, 6, 'LOT260400088', '673762', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453067'),
+(231, 9, 6, 'LOT260400089', '020267', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453325'),
+(232, 9, 6, 'LOT260400090', '753874', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453400'),
+(233, 9, 1, 'LOT260400091', '16;35;61;73;82', 1, 1, 0, '400.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453497'),
+(234, 9, 1, 'LOT260400092', '1;8;28;44;51', 1, 1, 0, '400.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453569'),
+(235, 9, 1, 'LOT260400093', '47;53;75;77;88', 1, 1, 0, '400.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453649'),
+(236, 9, 1, 'LOT260400094', '4;14;20;32;45', 1, 1, 0, '400.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453730'),
+(237, 9, 1, 'LOT260400095', '1;18;32;38;55', 1, 1, 0, '400.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453831'),
+(238, 9, 1, 'LOT260400096', '3;8;13;15;70', 1, 1, 0, '400.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453910'),
+(239, 9, 17, 'LOT260400097', '1;5;7;10;22;24;33;59;77;79', 1, 1, 0, '1750.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.453991'),
+(240, 9, 17, 'LOT260400098', '43;46;57;63;66;68;73;74;78;79', 1, 1, 0, '1750.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:42:29.454065'),
+(241, 9, 6, 'LOT260400099', '751576', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:45:17.019871'),
+(242, 9, 6, 'LOT260400100', '691982', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:45:44.543104'),
+(243, 9, 6, 'LOT260400101', '361358', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:49:09.310567'),
+(244, 9, 6, 'LOT260400102', '775707', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:49:27.720177'),
+(245, 9, 6, 'LOT260400103', '464678', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:49:27.721263'),
+(246, 9, 6, 'LOT260400104', '214849', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:49:27.721351'),
+(247, 9, 6, 'LOT260400105', '746963', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:55:20.053722'),
+(248, 9, 6, 'LOT260400106', '281580', 1, 1, 0, '300.00', NULL, NULL, '0.00', 0, 'active', '2026-04-23 00:56:11.574565');
 
 -- --------------------------------------------------------
 
@@ -280,6 +311,25 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`Id`, `RoleName`, `Description`) VALUES
 (1, 'user', NULL),
 (2, 'admin', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `systemsettings`
+--
+
+CREATE TABLE `systemsettings` (
+  `Key` varchar(255) NOT NULL,
+  `Value` longtext NOT NULL,
+  `UpdatedAt` datetime(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- A tábla adatainak kiíratása `systemsettings`
+--
+
+INSERT INTO `systemsettings` (`Key`, `Value`, `UpdatedAt`) VALUES
+('draw_locked', 'false', '2026-04-23 01:04:53.613888');
 
 -- --------------------------------------------------------
 
@@ -412,7 +462,25 @@ INSERT INTO `transactions` (`Id`, `UserId`, `Type`, `Amount`, `BalanceBefore`, `
 (106, 23, 'ticket_purchase', '-900.00', '27800.00', '26900.00', NULL, '3 szelvény vásárlása', '2026-04-21 18:51:31.378106'),
 (107, 23, 'ticket_purchase', '-300.00', '26900.00', '26600.00', NULL, '1 szelvény vásárlása', '2026-04-21 18:54:07.773797'),
 (108, 9, 'deposit', '2000.00', '3540651.00', '3542651.00', NULL, 'Egyenleg feltöltés: +2 000 Ft', '2026-04-21 19:23:48.134005'),
-(109, 9, 'ticket_purchase', '-900.00', '3542651.00', '3541751.00', NULL, '3 szelvény vásárlása', '2026-04-21 19:58:52.847726');
+(109, 9, 'ticket_purchase', '-900.00', '3542651.00', '3541751.00', NULL, '3 szelvény vásárlása', '2026-04-21 19:58:52.847726'),
+(110, 9, 'ticket_purchase', '-400.00', '3541751.00', '3541351.00', NULL, '1 szelvény vásárlása', '2026-04-22 19:40:26.185340'),
+(111, 9, 'ticket_purchase', '-300.00', '3541351.00', '3541051.00', NULL, '1 szelvény vásárlása', '2026-04-22 19:47:56.004874'),
+(112, 9, 'ticket_purchase', '-300.00', '3541051.00', '3540751.00', NULL, '1 szelvény vásárlása', '2026-04-22 21:49:00.136736'),
+(113, 9, 'ticket_purchase', '-400.00', '3540751.00', '3540351.00', NULL, '1 szelvény vásárlása', '2026-04-23 00:06:26.643086'),
+(114, 9, 'win_payout', '99999999.99', '3540351.00', '99999999.99', 222, 'Nyeremény: LOT260400080 (Scandinavian)', '2026-04-23 00:06:39.993588'),
+(115, 23, 'ticket_purchase', '-400.00', '26600.00', '26200.00', NULL, '1 szelvény vásárlása', '2026-04-23 00:09:39.934564'),
+(116, 23, 'ticket_purchase', '-400.00', '26200.00', '25800.00', NULL, '1 szelvény vásárlása', '2026-04-23 00:10:33.220117'),
+(117, 23, 'win_payout', '99999999.99', '25800.00', '99999999.99', 224, 'Nyeremény: LOT260400082 (Scandinavian)', '2026-04-23 00:10:57.136778'),
+(118, 9, 'ticket_purchase', '-300.00', '99999999.99', '99999699.99', NULL, '1 szelvény vásárlása', '2026-04-23 00:40:16.123530'),
+(119, 9, 'ticket_purchase', '-300.00', '99999699.99', '99999399.99', NULL, '1 szelvény vásárlása', '2026-04-23 00:41:41.514605'),
+(120, 9, 'ticket_purchase', '-900.00', '99999399.99', '99998499.99', NULL, '3 szelvény vásárlása', '2026-04-23 00:41:56.375732'),
+(121, 9, 'ticket_purchase', '-6800.00', '99998499.99', '99991699.99', NULL, '11 szelvény vásárlása', '2026-04-23 00:42:29.454136'),
+(122, 9, 'ticket_purchase', '-300.00', '99991699.99', '99991399.99', NULL, '1 szelvény vásárlása', '2026-04-23 00:45:17.020176'),
+(123, 9, 'ticket_purchase', '-300.00', '99991399.99', '99991099.99', NULL, '1 szelvény vásárlása', '2026-04-23 00:45:44.543454'),
+(124, 9, 'ticket_purchase', '-300.00', '99991099.99', '99990799.99', NULL, '1 szelvény vásárlása', '2026-04-23 00:49:09.334900'),
+(125, 9, 'ticket_purchase', '-900.00', '99990799.99', '99989899.99', NULL, '3 szelvény vásárlása', '2026-04-23 00:49:27.721442'),
+(126, 9, 'ticket_purchase', '-300.00', '99989899.99', '99989599.99', NULL, '1 szelvény vásárlása', '2026-04-23 00:55:20.053920'),
+(127, 9, 'ticket_purchase', '-300.00', '99989599.99', '99989299.99', NULL, '1 szelvény vásárlása', '2026-04-23 00:56:11.574779');
 
 -- --------------------------------------------------------
 
@@ -448,7 +516,6 @@ INSERT INTO `userroles` (`UserId`, `RoleId`, `AssignedAt`) VALUES
 (22, 1, '2026-04-18 10:49:16.800099'),
 (23, 1, '2026-04-19 09:31:46.293425'),
 (24, 1, '2026-04-20 19:35:56.366484'),
-(25, 1, '2026-04-20 21:24:18.604374'),
 (26, 1, '2026-04-20 21:27:02.100091'),
 (27, 1, '2026-04-21 19:03:55.971491'),
 (28, 1, '2026-04-21 20:31:51.523716');
@@ -464,7 +531,7 @@ CREATE TABLE `users` (
   `Username` longtext NOT NULL,
   `Email` longtext NOT NULL,
   `PasswordHash` longtext NOT NULL,
-  `Balance` decimal(10,2) NOT NULL,
+  `Balance` decimal(16,2) NOT NULL,
   `IsActive` tinyint(1) NOT NULL,
   `LastLoginAt` datetime(6) DEFAULT NULL,
   `CreatedAt` datetime(6) NOT NULL,
@@ -481,7 +548,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`Id`, `Username`, `Email`, `PasswordHash`, `Balance`, `IsActive`, `LastLoginAt`, `CreatedAt`, `UpdatedAt`, `EmailConfirmationToken`, `EmailConfirmed`, `PasswordResetToken`, `PasswordResetExpires`) VALUES
 (7, 'TesztElek', 'tesztelek@gmail.com', '$2a$11$h3yQr083qe06pPX111uXD.8RHAzJZQ42hIO3yETX.23ErDFF6k7B.', '100.00', 1, '2026-03-11 16:11:43.157882', '2026-03-11 13:50:34.922585', '2026-03-11 13:50:34.922585', NULL, 0, NULL, NULL),
-(9, 'admin', 'admin@test.com', '$2b$11$S6OegkJsfA3r2tDr3fRYkOwSBHI6lqlPNCOSutll/m86NeQxulE52', '3541751.00', 1, '2026-04-21 19:58:46.234344', '2026-03-11 17:25:14.000000', '2026-04-04 07:58:04.197422', 'ec254bb8ee264cb1ad0569f4d5022b3a', 1, NULL, NULL),
+(9, 'admin', 'admin@test.com', '$2b$11$S6OegkJsfA3r2tDr3fRYkOwSBHI6lqlPNCOSutll/m86NeQxulE52', '99989299.99', 1, '2026-04-23 01:03:54.688395', '2026-03-11 17:25:14.000000', '2026-04-04 07:58:04.197422', 'ec254bb8ee264cb1ad0569f4d5022b3a', 1, NULL, NULL),
 (10, 'cica', 'cica123@gmail.com', '$2a$11$1ZHuqPIr59acnfTE2IQwwuDj3d1Pt/HLQ5Ft2p8rxrRlE2Po22.16', '10000.00', 1, '2026-03-16 22:19:05.046562', '2026-03-16 22:18:46.602220', '2026-03-16 22:18:46.602220', NULL, 1, NULL, NULL),
 (11, 'kacsa', 'kacsa123@kacsa.com', '$2a$11$v8fyjd4FZOSLWUmlRG55P.n/a6.EZBG6sqdRIzI0YF.JI7J5Ec7hO', '10000.00', 1, '2026-03-16 22:33:25.714115', '2026-03-16 22:33:11.528657', '2026-03-16 22:33:11.528657', NULL, 1, NULL, NULL),
 (12, 'maki', 'maki@gmail.com', '$2a$11$s95tDq.KvdGkt4BUs/TxK.JEwizke6Wv80lh3J79H65gC1IVkvTda', '19300.00', 1, '2026-04-10 23:20:47.889811', '2026-04-01 21:43:23.531974', '2026-04-05 18:24:06.622823', NULL, 1, NULL, NULL),
@@ -495,9 +562,8 @@ INSERT INTO `users` (`Id`, `Username`, `Email`, `PasswordHash`, `Balance`, `IsAc
 (20, 'assdddd', 'asdssdds@gmaisdsi.hu', '$2a$11$x67/6C77nMxGfgeRDGIUPeCTZfe0bkSBqNKTkFpypUyjQQm7ycIY.', '10000.00', 1, NULL, '2026-04-16 18:58:03.260177', '2026-04-16 18:58:03.260177', '06fc7490c876468cb518bd20b826152a', 0, NULL, NULL),
 (21, 'asdasd', 'asdasdas@gmail.com', '$2a$11$DtvqzkywLPZIWUf5eegufu9sS98.wVYmbwCqV0FWfYOoHB/4tRoZm', '10000.00', 1, '2026-04-16 19:18:56.816612', '2026-04-16 19:10:45.725211', '2026-04-16 19:10:45.725212', NULL, 1, NULL, NULL),
 (22, 'balint', 'v.balint0817@gmail.com', '$2a$11$VAJfuUnfyx.UfvlFBAlnBu3HhlVRQg8x29hOOCd3Os.16T2pDQSDe', '10000.00', 1, '2026-04-18 10:51:31.080857', '2026-04-18 10:49:16.404839', '2026-04-18 10:49:16.404839', NULL, 1, NULL, NULL),
-(23, 'balint2', 'balint2@gmail.com', '$2a$11$5Li5ap0g4GklyqXiV.HSb.Ava.aOtUFvpWb4d.mOhpxrkdYCkXcwe', '26600.00', 1, '2026-04-21 20:34:58.814071', '2026-04-19 09:31:45.421826', '2026-04-19 23:40:28.475790', NULL, 1, 'bf8176b4b3e54ad3a55378cb5fff9302', '2026-04-21 21:30:58.607445'),
+(23, 'balint2', 'balint2@gmail.com', '$2a$11$5Li5ap0g4GklyqXiV.HSb.Ava.aOtUFvpWb4d.mOhpxrkdYCkXcwe', '120025800.00', 1, '2026-04-23 01:03:43.725576', '2026-04-19 09:31:45.421826', '2026-04-19 23:40:28.475790', NULL, 1, 'bf8176b4b3e54ad3a55378cb5fff9302', '2026-04-21 21:30:58.607445'),
 (24, 'teszteltem', 'teszteltem@gmail.com', '$2a$11$ciga2SLuBTgtqGZQLVp/ZOfVBRvauJkG/HRlCSVe0KqL4aoWehxZa', '10200.00', 1, '2026-04-20 20:19:39.243894', '2026-04-20 19:35:56.167522', '2026-04-21 19:31:55.860650', '7ca3158f56024aaa8b2cf1fbd4f989e6', 0, NULL, NULL),
-(25, 'kutya', 'kutya@gmail.com', '$2a$11$Ay1QFphRAN5nZrtYaMaqhugfTe7ykae4ygoABusfghxj0mTZLeEaq', '10000.00', 1, NULL, '2026-04-20 21:24:18.297097', '2026-04-20 21:24:18.297098', '7722418bb29646d38673dc717eb5391b', 0, NULL, NULL),
 (26, 'macska', 'macska@gmail.com', '$2a$11$1fUnG0YK.fZ/8zSoweISwu29K1/MsmfGNTAYK0WVBrVox.oqlmtK2', '10000.00', 1, '2026-04-20 21:28:26.940866', '2026-04-20 21:27:01.906073', '2026-04-20 21:27:01.906073', NULL, 1, NULL, NULL),
 (27, 'pulyka', 'pulyka@gmail.com', '$2a$11$EsrnGgStcYiEMH6KRrkq/uvo1ceE7smS8PTK6KDGPjWlSHFEZqXxa', '10000.00', 1, '2026-04-21 19:04:36.972311', '2026-04-21 19:03:55.542479', '2026-04-21 19:03:55.542479', NULL, 1, NULL, NULL),
 (28, 'tapir', 'tapir@gmail.com', '$2a$11$lb67hXAtK7C2KAbtUi/Hr.cZbyMF6Yj403XoH1.BZ2Iy4vDzpjhru', '10000.00', 1, '2026-04-21 20:32:14.404005', '2026-04-21 20:31:51.028918', '2026-04-21 20:31:51.028918', NULL, 1, NULL, NULL);
@@ -520,7 +586,8 @@ CREATE TABLE `__efmigrationshistory` (
 INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES
 ('20260217231946_InitialCreate', '8.0.24'),
 ('20260218173609_IntitalDb', '8.0.24'),
-('20260316201412_AddEmailConfirmationFields', '8.0.24');
+('20260316201412_AddEmailConfirmationFields', '8.0.24'),
+('20260422222726_AddSystemSettings', '8.0.24');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -547,6 +614,12 @@ ALTER TABLE `lotterytickets`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`Id`);
+
+--
+-- A tábla indexei `systemsettings`
+--
+ALTER TABLE `systemsettings`
+  ADD PRIMARY KEY (`Key`);
 
 --
 -- A tábla indexei `transactions`
@@ -582,25 +655,25 @@ ALTER TABLE `__efmigrationshistory`
 -- AUTO_INCREMENT a táblához `lotterydraws`
 --
 ALTER TABLE `lotterydraws`
-  MODIFY `Id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `Id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT a táblához `lotterytickets`
 --
 ALTER TABLE `lotterytickets`
-  MODIFY `Id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
+  MODIFY `Id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
 
 --
 -- AUTO_INCREMENT a táblához `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `Id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `Id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `Id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Megkötések a kiírt táblákhoz

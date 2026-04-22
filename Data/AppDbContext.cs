@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
     public DbSet<LotteryDraw> LotteryDraws => Set<LotteryDraw>();
     public DbSet<LotteryTicket> LotteryTickets => Set<LotteryTicket>();
     public DbSet<Transaction> Transactions => Set<Transaction>();
+    public DbSet<SystemSetting> SystemSettings => Set<SystemSetting>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

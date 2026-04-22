@@ -17,12 +17,14 @@ namespace FortunaCasino.Controllers
         private readonly AppDbContext _context;
         private readonly ILotteryService _lotteryService;
         private readonly ICurrentUserService _currentUser;
+        private readonly IEmailService _emailService;
 
-        public DrawController(AppDbContext context, ILotteryService lotteryService, ICurrentUserService currentUser)
+        public DrawController(AppDbContext context, ILotteryService lotteryService, ICurrentUserService currentUser, IEmailService emailService)
         {
             _context = context;
             _lotteryService = lotteryService;
             _currentUser = currentUser;
+            _emailService = emailService;
         }
 
         // Sorsolások listája (szűrésekkel)
@@ -163,7 +165,7 @@ namespace FortunaCasino.Controllers
             return Ok(new { drawId = id, isActive = draw.IsActive });
         }
 
-        //Sorsolás törlése
+        // Sorsolás törlése
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDraw(long id)
         {
@@ -276,6 +278,23 @@ namespace FortunaCasino.Controllers
                             Matches = totalMatches,
                             WinAmount = winAmount
                         });
+
+                        await _emailService.SendEmailAsync(
+                            ticket.User.Email,
+                            "🎉 Nyertél a FortunaCasinón!",
+                            $@"
+                            <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
+                                <h2 style='color: #ea580c;'>🎉 Gratulálunk, {ticket.User.Username}!</h2>
+                                <p>Nyertél a <strong>{draw.GameType}</strong> sorsoláson!</p>
+                                <div style='background: #f3f4f6; border-radius: 8px; padding: 16px; margin: 16px 0;'>
+                                    <p><strong>Szelvénykód:</strong> {ticket.TicketCode}</p>
+                                    <p><strong>Találatok:</strong> {totalMatches}</p>
+                                    <p><strong>Nyeremény:</strong> {winAmount.ToString("N0")} Ft</p>
+                                </div>
+                                <p>A nyeremény már jóvá lett írva az egyenlegedre. 🏆</p>
+                                <p style='color: #6b7280; font-size: 12px;'>FortunaCasino csapata</p>
+                            </div>"
+                        );
                     }
                 }
 

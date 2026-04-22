@@ -88,6 +88,11 @@ public class LotteryController : ControllerBase
             if (!user.IsActive)
                 return Forbid();
 
+            var drawLock = await _context.SystemSettings
+            .FirstOrDefaultAsync(s => s.Key == "draw_locked");
+            if (drawLock?.Value == "true")
+                return BadRequest(new { message = "A szelvényvásárlás jelenleg le van zárva. Próbáld később!" });
+
             var activeDraws = await _context.LotteryDraws
                 .Where(d => d.IsActive && !d.IsDrawn)
                 .ToListAsync();
