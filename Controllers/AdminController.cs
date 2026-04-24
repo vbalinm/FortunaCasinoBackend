@@ -15,11 +15,13 @@ namespace FortunaCasino.Controllers
     {
         private readonly AppDbContext _context;
         private readonly ICurrentUserService _currentUser;
+        private readonly IConfiguration _configuration;
 
-        public AdminController(AppDbContext context, ICurrentUserService currentUser)
+        public AdminController(AppDbContext context, ICurrentUserService currentUser, IConfiguration configuration)
         {
             _context = context;
             _currentUser = currentUser;
+            _configuration = configuration;
         }
 
         //Statisztikák
@@ -64,7 +66,6 @@ namespace FortunaCasino.Controllers
                 .OrderBy(g => g.Year).ThenBy(g => g.Month)
                 .ToListAsync();
 
-            //Sorsolási statisztikák
             var totalDraws = await _context.LotteryDraws.CountAsync();
             var completedDraws = await _context.LotteryDraws.CountAsync(d => d.IsDrawn);
             var activeDraws = await _context.LotteryDraws.CountAsync(d => d.IsActive && !d.IsDrawn);
@@ -219,6 +220,7 @@ namespace FortunaCasino.Controllers
 
             return Ok(draws);
         }
+
         // Zárolás állapotának lekérése
         [HttpGet("settings/draw-lock")]
         public async Task<IActionResult> GetDrawLock()
@@ -250,8 +252,88 @@ namespace FortunaCasino.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { isLocked = setting.Value == "true" });
         }
-    }
 
+        // Biztonsági mentés
+        [HttpGet("backup")]
+        public IActionResult BackupDatabase()
+        {
+            try
+            {
+                var mysqldump = _configuration["MySql:DumpPath"] ?? "mysqldump";
+                var database = _configuration["MySql:Database"] ?? "FortunaCasino";
+                var user = _configuration["MySql:User"] ?? "root";
+                var password = _configuration["MySql:Password"] ?? "";
+
+                var fileName = $"backup_{DateTime.Now:yyyyMMdd_HHmmss}.sql";
+                var args = string.IsNullOrEmpty(password)
+                    ? $"-u {user} {database}"
+                    : $"-u {user} --password={password} {database}";
+
+                var process = new System.Diagnostics.Process
+                {
+                    StartInfo = new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = mysqldump,
+                        Arguments = args,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    }
+                };
+
+                process.Start();
+                var output = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    var error = process.StandardError.ReadToEnd();
+                    return StatusCode(500, new { message = $"Mentés sikertelen: {error}" });
+                }
+
+                var bytes = System.Text.Encoding.UTF8.GetBytes(output);
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Hiba: {ex.Message}" });
+            }
+        }
+
+        // Karbantartási mód állapotának lekérése
+        [AllowAnonymous]
+        [HttpGet("settings/maintenance")]
+        public async Task<IActionResult> GetMaintenance()
+        {
+            var setting = await _context.SystemSettings
+                .FirstOrDefaultAsync(s => s.Key == "maintenance_mode");
+            var isEnabled = setting?.Value == "true";
+            return Ok(new { isEnabled });
+        }
+
+        // Karbantartási mód toggle
+        [HttpPost("settings/maintenance/toggle")]
+        public async Task<IActionResult> ToggleMaintenance()
+        {
+            var setting = await _context.SystemSettings
+                .FirstOrDefaultAsync(s => s.Key == "maintenance_mode");
+
+            if (setting == null)
+            {
+                setting = new SystemSetting { Key = "maintenance_mode", Value = "true", UpdatedAt = DateTime.Now };
+                _context.SystemSettings.Add(setting);
+            }
+            else
+            {
+                setting.Value = setting.Value == "true" ? "false" : "true";
+                setting.UpdatedAt = DateTime.Now;
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok(new { isEnabled = setting.Value == "true" });
+        }
+    }
 }
 
 namespace FortunaCasino.DTOs

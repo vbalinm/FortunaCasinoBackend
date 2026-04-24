@@ -100,13 +100,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseRouting();
 app.UseCors("AllowFrontend");
+app.UseMiddleware<FortunaCasino.Middleware.MaintenanceMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-/*ALTER TABLE `users`
-  ADD COLUMN IF NOT EXISTS `PasswordResetToken` longtext DEFAULT NULL,
-  ADD COLUMN IF NOT EXISTS `PasswordResetExpires` datetime(6) DEFAULT NULL;
-Ezeket még hozzá kell adni az adatb-hez*/
