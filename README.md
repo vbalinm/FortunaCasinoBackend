@@ -31,6 +31,9 @@ A rendszer admin felülettel is rendelkezik a felhasználók, sorsolások és be
 - Karbantartási mód és rendszer zárolás
 - Adatbázis mentések
 
+  <img width="1200" height="950" alt="vasarlas" src="https://github.com/user-attachments/assets/b466be04-6467-40b6-800d-444fae89ced5" />
+
+
 ---
 
 ## 🎮 Elérhető játékok
@@ -43,6 +46,7 @@ A rendszer admin felülettel is rendelkezik a felhasználók, sorsolások és be
 - Kenó
 
 ---
+<img width="1110" height="962" alt="homepage" src="https://github.com/user-attachments/assets/57574f9f-acd8-45b2-8764-17e7c09e1bda" />
 
 ## 🛠️ Telepítés és futtatás
 
@@ -95,6 +99,9 @@ Frontend elérhető: `http://localhost:5173`
 
 ---
 
+<img width="620" height="540" alt="login" src="https://github.com/user-attachments/assets/dbec0be9-ac3c-45b3-9755-36a7906c1823" />
+
+
 ## 🔐 Teszt admin fiók
 
 | Mező | Érték |
@@ -103,6 +110,9 @@ Frontend elérhető: `http://localhost:5173`
 | Jelszó | `password123` |
 
 > ⚠️ Csak fejlesztési célokra!
+
+<img width="1200" height="950" alt="adminfelulet" src="https://github.com/user-attachments/assets/e345e3f4-b596-4ddb-bdaf-1aa6f123314f" />
+
 
 ---
 
