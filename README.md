@@ -128,6 +128,18 @@ FortunaScript/
 
 ---
 
+## 📧 Email tesztelés
+
+Az alkalmazás email küldéshez Gmail SMTP-t használ. A teszteléshez egy előre konfigurált fiók áll rendelkezésre:
+
+| Mező | Érték |
+|------|-------|
+| Email | `fortunalotto343@gmail.com` |
+| Jelszó | `Lotto5720lsot` |
+
+> ⚠️ Az email fiók **kétlépéses hitelesítéssel** védett.
+> Hozzáféréshez írj az alábbi címre: **v.balint0817@gmail.com** és adok hozzáférést
+
 ## 🔗 API dokumentáció
 
 Swagger UI (csak fejlesztői módban):
