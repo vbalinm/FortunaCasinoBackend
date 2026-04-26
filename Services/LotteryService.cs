@@ -154,8 +154,8 @@ public class LotteryService : ILotteryService
     //Játéktípusonkénti szám generálás
     public string GenerateNumbersForGame(string gameType)
     {
-        // 🧪 TESZT - fix nyerőszámok 
-        //return "1;2;3;4;5;6;7";
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!🧪 TESZT - fix nyerőszámok hatoslottó!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //return "1;2;3;4;5;6";
 
         if (!GameRules.TryGetValue(gameType, out var rule))
             return GenerateRandomNumbers();
